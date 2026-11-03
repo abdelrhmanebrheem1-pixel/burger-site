@@ -1,0 +1,111 @@
+<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>المطعم</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0d0c0b;--card:#181615;--line:#2a2622;--ink:#f4ead8;--mute:#b9ab97;--or:#ff6b1f}
+*{box-sizing:border-box}html{scroll-behavior:smooth;color-scheme:dark}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Cairo,Tahoma,sans-serif;padding-bottom:90px}
+a{color:inherit;text-decoration:none}
+header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 44px;border-bottom:1px solid var(--line)}
+#logo{color:var(--or);font-weight:800;font-size:24px}#logo img{height:40px}
+nav{display:flex;gap:28px;font-size:15px}.hd{display:flex;gap:10px}
+.ic{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:none;color:var(--ink);cursor:pointer;font:800 15px Cairo}
+.ic.or{background:var(--or);border-color:var(--or);color:#1a0d04}
+section{padding:0 44px;max-width:1280px;margin:0 auto}
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;padding-top:50px;padding-bottom:50px}
+.eb{color:var(--or);font-size:15px}
+h1{font-size:clamp(44px,7vw,92px);line-height:1.05;margin:14px 0 18px;font-weight:800}
+.hero p{color:var(--mute);line-height:2;font-size:17px;max-width:520px}
+.btn{background:var(--or);color:#1a0d04;border:0;border-radius:999px;padding:14px 34px;font:800 16px Cairo;cursor:pointer;display:inline-block}
+.btn.ol{background:none;color:var(--ink);border:1px solid var(--ink);font-weight:600}.btn.sm{padding:9px 20px;font-size:14px}
+.hv{aspect-ratio:1;border-radius:28px;border:2px dashed #4a3f35;background:var(--card);display:grid;place-items:center;color:var(--mute);overflow:hidden}
+.hv img{width:100%;height:100%;object-fit:cover}
+h2{font-size:38px;margin:50px 0 22px;font-weight:800}
+.tabs{display:flex;gap:10px;overflow-x:auto;margin-bottom:22px}
+.tab{flex:none;border:1px solid var(--line);background:none;color:var(--ink);padding:10px 22px;border-radius:999px;font:600 15px Cairo;cursor:pointer}
+.tab.on{background:var(--or);border-color:var(--or);color:#1a0d04}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:22px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:24px;overflow:hidden}
+.im{height:210px;background:#1f1c1a;display:grid;place-items:center;color:var(--mute);font-size:14px;position:relative}
+.im img{width:100%;height:100%;object-fit:cover}
+.bd{position:absolute;top:14px;inset-inline-end:14px;background:var(--or);color:#1a0d04;font-size:12px;padding:4px 14px;border-radius:999px}
+.cb{padding:20px}.cb h3{margin:0 0 6px;font-size:20px}.cb p{margin:0 0 18px;color:var(--mute);font-size:14px;line-height:1.7}
+.rw{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.pr{color:var(--or);font-weight:800;font-size:19px}.pr s{color:var(--mute);font-size:13px;font-weight:400}.na{color:#e5645a;font-size:14px}
+.offer{display:flex;align-items:center;justify-content:space-between;gap:20px;background:linear-gradient(135deg,#1f140d,#17110d);border:1px solid #3a2a1e;border-radius:28px;padding:36px 40px;margin-bottom:18px}
+.offer h3{font-size:32px;margin:6px 0}.offer small{color:var(--mute)}
+footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;color:var(--mute);font-size:14px;padding:34px 44px;border-top:1px solid var(--line);margin-top:60px}
+footer a{color:var(--or);margin-inline-start:12px}
+dialog{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:24px;padding:0;width:min(520px,94vw);max-height:90vh}
+dialog::backdrop{background:#000a}.dl{padding:22px}.dl .im{border-radius:16px;margin-bottom:14px}
+.ck{display:block;padding:8px 0;border-bottom:1px solid var(--line)}.ck em{color:var(--or);font-style:normal}
+.qt{display:flex;align-items:center;gap:12px}.qt button{width:34px;height:34px;border-radius:50%;border:0;background:var(--or);font:800 18px Cairo;cursor:pointer}
+input,textarea{width:100%;background:var(--bg);border:1px solid var(--line);color:var(--ink);border-radius:14px;padding:12px;font:inherit;margin:6px 0}
+.ci{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);gap:8px}
+.bar{display:none;position:fixed;inset:auto 0 0;background:var(--card);border-top:1px solid var(--line);padding:12px 20px calc(12px + env(safe-area-inset-bottom,0));align-items:center;justify-content:space-between;z-index:9}
+.bar.on{display:flex}.err{color:#e5645a;font-size:14px}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+@media(max-width:800px){header,section,footer{padding-inline:20px}nav{display:none}.hero{grid-template-columns:1fr}.hv{aspect-ratio:4/3;order:2}.offer{flex-direction:column;align-items:flex-start}}
+</style></head><body>
+<header><a id="logo" href="#"></a><nav><a href="#">الرئيسية</a><a href="#menu">المنيو</a><a href="#offers">العروض</a><a href="#about">من نحن</a><a href="#about">تواصل معنا</a></nav>
+<div class="hd"><a class="ic" href="#menu" style="display:grid;place-items:center" aria-label="بحث">⌕</a><button class="ic or" id="cb" aria-label="السلة">٠</button></div></header>
+<section class="hero"><div><div class="eb" id="he"></div><h1 id="ht"></h1><p id="hp"></p><div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px"><a class="btn" href="#menu">اطلب الآن</a><a class="btn ol" href="#menu">اكتشف المنيو</a></div></div><div class="hv" id="hv">مكان صورة البرجر الحقيقية</div></section>
+<section id="best" hidden><h2>الأكثر مبيعًا</h2><div class="grid" id="bg"></div></section>
+<section id="menu"><h2>المنيو</h2><div class="tabs" id="tabs"></div><div class="grid" id="mg"></div></section>
+<section id="offers" hidden><h2>العروض والوجبات المميزة</h2><div id="og"></div></section>
+<footer id="about"><span id="fh"></span><span id="fp"></span><span id="fa"></span><span id="fs"></span></footer>
+<div class="bar" id="bar"><div id="bs"></div><button class="btn" id="bgo">إتمام الطلب</button></div>
+<dialog id="pd"><div class="dl" id="pdc"></div></dialog><dialog id="cd"><div class="dl" id="cdc"></div></dialog>
+<script>
+let D,cart=[],cat=0;
+const $=s=>document.querySelector(s),E=n=>(+n).toLocaleString('ar-EG'),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const img=u=>u?`<img src="${esc(u)}" alt="" loading="lazy">`:'صورة الصنف';
+const card=p=>`<article class="card"><div class="im">${p.badge?`<b class="bd">${esc(p.badge)}</b>`:''}${img(p.image)}</div><div class="cb"><h3>${esc(p.name)}</h3><p>${esc(p.description)}</p><div class="rw"><div class="pr">${p.old_price?`<s>${E(p.old_price)}</s> `:''}${E(p.price)} ج.م</div>${p.available?`<button class="btn sm" data-p="${p.id}">أضف للسلة</button>`:'<span class="na">غير متاح</span>'}</div></div></article>`;
+async function init(){
+ D=await (await fetch('/api/public')).json();const s=D.settings;document.title=s.name;
+ $('#logo').innerHTML=s.logo?`<img src="${esc(s.logo)}" alt="${esc(s.name)}">`:esc(s.name);
+ $('#he').textContent=s.hero_eyebrow;$('#ht').textContent=s.hero_title;$('#hp').textContent=s.hero_text;
+ if(s.hero_image)$('#hv').innerHTML=img(s.hero_image);
+ $('#fh').textContent='مواعيد العمل: '+s.hours;$('#fp').textContent='الهاتف: '+s.phone;$('#fa').textContent='العنوان: '+s.address;
+ $('#fs').innerHTML=s.social.split('\n').map(l=>l.split('|')).filter(x=>/^https?:/.test(x[1]||'')).map(x=>`<a href="${esc(x[1].trim())}" target="_blank" rel="noopener">${esc(x[0])}</a>`).join('');
+ const f=D.products.filter(p=>p.featured);$('#best').hidden=!f.length;$('#bg').innerHTML=f.map(card).join('');
+ $('#tabs').innerHTML=[{id:0,name:'الكل'},...D.categories].map(c=>`<button class="tab${c.id==cat?' on':''}" data-c="${c.id}">${esc(c.name)}</button>`).join('');
+ $('#mg').innerHTML=D.products.filter(p=>!cat||p.category_id==cat).map(card).join('')||'<p>لا توجد أصناف في هذا القسم.</p>';
+ $('#offers').hidden=!D.offers.length;
+ $('#og').innerHTML=D.offers.map(o=>`<div class="offer"><div><small>العروض والوجبات المميزة</small><h3>${esc(o.title)}</h3><small>${esc(o.description)}</small><div class="pr">${o.old_price?`<s>${E(o.old_price)}</s> `:''}${E(o.price)} ج.م</div></div><button class="btn" data-o="${o.id}">اطلب العرض</button></div>`).join('');
+ draw();
+}
+function tot(){return cart.reduce((a,i)=>a+i.unit*i.qty,0)}
+function draw(){const n=cart.reduce((a,i)=>a+i.qty,0);$('#cb').textContent=E(n);$('#bar').classList.toggle('on',n>0);$('#bs').textContent=E(n)+' أصناف · '+E(tot())+' ج.م'}
+function add(it){const k=cart.find(c=>c.t==it.t&&c.id==it.id&&c.ad.join()==it.ad.join());k?k.qty+=it.qty:cart.push(it);draw()}
+function openP(id){
+ const p=D.products.find(x=>x.id==id),ad=JSON.parse(p.addons||'[]');let q=1;
+ $('#pdc').innerHTML=`<div class="im">${img(p.image)}</div><h3>${esc(p.name)}</h3><p>${esc(p.description)}</p>${p.ingredients?`<p>المكونات: ${esc(p.ingredients)}</p>`:''}${ad.map((a,i)=>`<label class="ck"><input type="checkbox" value="${i}" style="width:auto"> ${esc(a.name)} <em>+${E(a.price)} ج.م</em></label>`).join('')}<div class="rw" style="margin-top:16px"><div class="qt"><button data-q="-1">−</button><b id="pq">1</b><button data-q="1">+</button></div><button class="btn" id="pa">أضف للسلة</button></div>`;
+ $('#pdc').onclick=e=>{const d=e.target.dataset.q;if(d){q=Math.max(1,q+ +d);$('#pq').textContent=E(q)}};
+ $('#pa').onclick=()=>{const sel=[...$('#pdc').querySelectorAll('input:checked')].map(i=>ad[i.value]);add({t:'p',id:p.id,name:p.name,unit:p.price+sel.reduce((a,x)=>a+x.price,0),qty:q,ad:sel.map(x=>x.name)});$('#pd').close()};
+ $('#pd').showModal();
+}
+function cartUI(msg){
+ const s=D.settings,fee=+s.delivery_fee||0;
+ $('#cdc').innerHTML=msg||(cart.length?`${cart.map((c,i)=>`<div class="ci"><div>${esc(c.name)}<br><small>${esc(c.ad.join('، '))}</small></div><div class="qt"><button data-i="${i}" data-d="-1">−</button><b>${E(c.qty)}</b><button data-i="${i}" data-d="1">+</button></div><b>${E(c.unit*c.qty)} ج.م</b></div>`).join('')}
+ <p>رسوم التوصيل: ${E(fee)} ج.م<br><b class="pr">الإجمالي: ${E(tot()+fee)} ج.م</b></p>
+ <input id="fn" placeholder="الاسم" autocomplete="name"><input id="fph" placeholder="رقم الهاتف" type="tel" autocomplete="tel"><input id="fad" placeholder="عنوان التوصيل" autocomplete="street-address"><textarea id="fno" placeholder="ملاحظات الطلب" rows="2"></textarea><div class="err" id="fe"></div><button class="btn" id="fgo" style="width:100%">تأكيد الطلب</button>`:'<p>السلة فارغة.</p>');
+}
+$('#cdc').onclick=async e=>{
+ const d=e.target.dataset;if(d.d){const c=cart[d.i];c.qty+=+d.d;if(c.qty<1)cart.splice(d.i,1);draw();cartUI()}
+ if(e.target.id==='fgo'){
+  const body={name:$('#fn').value,phone:$('#fph').value,address:$('#fad').value,notes:$('#fno').value,items:cart.map(c=>({t:c.t,id:c.id,qty:c.qty,addons:c.ad}))};
+  const r=await fetch('/api/order',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)}),j=await r.json();
+  if(!r.ok){$('#fe').textContent=j.error;return}
+  cart=[];draw();const w=D.settings.whatsapp.replace(/\D/g,'');
+  cartUI(`<h3>تم استلام طلبك</h3><p>رقم الطلب: <b>${j.code}</b><br>الإجمالي: ${E(j.total)} ج.م</p>${w?`<a class="btn" target="_blank" rel="noopener" href="https://wa.me/${w}?text=${encodeURIComponent('طلب رقم '+j.code)}">تأكيد على واتساب</a>`:''}`);
+ }
+};
+document.addEventListener('click',e=>{
+ const d=e.target.closest('[data-p],[data-o],[data-c]')?.dataset;if(!d)return;
+ if(d.p)openP(d.p);
+ if(d.o){const o=D.offers.find(x=>x.id==d.o);add({t:'o',id:o.id,name:o.title,unit:o.price,qty:1,ad:[]})}
+ if(d.c!==undefined){cat=+d.c;init()}
+});
+$('#cb').onclick=$('#bgo').onclick=()=>{cartUI();$('#cd').showModal()};
+init();
+</script></body></html>
