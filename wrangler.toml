@@ -7,6 +7,3 @@ binding = "DB"
 database_name = "burger-db"
 database_id = "076b90f0-3c19-46b1-89c8-32c3d4a79040"
 
-[[r2_buckets]]
-binding = "R2"
-bucket_name = "burger-images"
