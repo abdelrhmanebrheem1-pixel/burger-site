@@ -5,7 +5,7 @@ pages_build_output_dir = "public"
 [[d1_databases]]
 binding = "DB"
 database_name = "burger-db"
-database_id = "ضع-المعرف-هنا"
+database_id = "076b90f0-3c19-46b1-89c8-32c3d4a79040"
 
 [[r2_buckets]]
 binding = "R2"
