@@ -58,7 +58,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 <script>
 let D,cart=[],cat=0;
 const $=s=>document.querySelector(s),E=n=>(+n).toLocaleString('ar-EG'),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const img=u=>u?`<img src="${esc(u)}" alt="" loading="lazy">`:'صورة الصنف';
+const img=u=>u?`<img src="${esc(u)}" alt="" loading="lazy" onerror="this.replaceWith(document.createTextNode('صورة الصنف'))">`:'صورة الصنف';
 const card=p=>`<article class="card"><div class="im">${p.badge?`<b class="bd">${esc(p.badge)}</b>`:''}${img(p.image)}</div><div class="cb"><h3>${esc(p.name)}</h3><p>${esc(p.description)}</p><div class="rw"><div class="pr">${p.old_price?`<s>${E(p.old_price)}</s> `:''}${E(p.price)} ج.م</div>${p.available?`<button class="btn sm" data-p="${p.id}">أضف للسلة</button>`:'<span class="na">غير متاح</span>'}</div></div></article>`;
 async function init(){
  D=await (await fetch('/api/public')).json();const s=D.settings;document.title=s.name;
