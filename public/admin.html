@@ -139,8 +139,14 @@ function nav(){
 }
 
 function login(){
- $('#m').innerHTML='<h1>تسجيل الدخول</h1><div style="max-width:360px"><label>كلمة المرور</label><input id="pw" type="password" autocomplete="current-password"><button class="btn" id="li">دخول</button></div>';
+ $('#m').innerHTML='<h1>تسجيل الدخول</h1><div style="max-width:360px"><label for="pw">كلمة المرور</label><div style="display:flex;gap:8px;align-items:center"><input id="pw" type="password" inputmode="text" autocomplete="current-password" autocapitalize="off" spellcheck="false" style="flex:1;min-width:0"><button type="button" class="pl" id="togglePw" aria-label="إظهار كلمة المرور">إظهار</button></div><button class="btn" id="li">دخول</button></div>';
  $('#nv').innerHTML='';
+ $('#togglePw').onclick=()=>{
+  const p=$('#pw'),show=p.type==='password';
+  p.type=show?'text':'password';
+  $('#togglePw').textContent=show?'إخفاء':'إظهار';
+  $('#togglePw').setAttribute('aria-label',show?'إخفاء كلمة المرور':'إظهار كلمة المرور');
+ };
 
  const go=async()=>{
   const r=await fetch('/api/login',{
