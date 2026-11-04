@@ -11,16 +11,16 @@ header{height:76px;position:sticky;top:0;z-index:20;display:flex;align-items:cen
 nav{display:flex;gap:26px;font-size:12px;font-weight:800;letter-spacing:1.5px;color:#e6e0da}nav a:hover{color:var(--or)}
 .hd{display:flex;gap:10px;align-items:center}.ic{min-width:43px;height:43px;border:0;background:transparent;color:var(--ink);cursor:pointer;font:700 12px Cairo;letter-spacing:2px}.ic.or{color:var(--or);font:800 15px Cairo;letter-spacing:1px}#cb{display:flex;align-items:center;gap:12px}#cb:before{content:"CART";color:#eee;font:700 11px 'Barlow Condensed',Cairo,sans-serif;letter-spacing:3px}#cb{font-size:14px}
 section{padding:0 clamp(18px,6vw,88px);max-width:1320px;margin:0 auto}
-.hero{position:relative;isolation:isolate;display:flex;align-items:center;min-height:calc(100svh - 76px);width:100%;max-width:none;margin:0;padding:clamp(42px,8vh,100px) clamp(24px,8vw,120px);overflow:hidden;background:radial-gradient(ellipse at 70% 40%,#4b2114 0%,#17100d 35%,#080808 75%)}
-.hero:before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(0,0,0,.86) 0%,rgba(0,0,0,.56) 48%,rgba(0,0,0,.12) 100%),linear-gradient(0deg,rgba(0,0,0,.52),transparent 55%)}
-.hero>div:first-child{position:relative;z-index:2;width:min(680px,100%)}
+.hero{position:relative;isolation:isolate;display:block;min-height:calc(100svh - 76px);width:100%;max-width:none;margin:0;padding:0;overflow:hidden;background:#080808}
+.hero:before{display:none}
+.hero>div:first-child{display:none}
 .eb{color:var(--or2);font:700 12px 'Barlow Condensed',Cairo,sans-serif;letter-spacing:5px;text-transform:uppercase}
 h1{font:900 clamp(54px,8.4vw,112px)/.91 'Barlow Condensed',Cairo,sans-serif;letter-spacing:-1px;text-transform:uppercase;margin:18px 0 24px;max-width:760px}
 .hero p{color:#ded7d0;line-height:1.9;font-size:clamp(14px,1.5vw,17px);max-width:530px}
-.hero .btn{width:min(480px,100%);text-align:center;border-radius:2px;padding:17px 22px;font:800 13px Cairo;letter-spacing:3px;text-transform:uppercase}
-.hero .btn.ol{width:auto;border:0;border-bottom:2px solid var(--or);color:#fff;background:transparent;margin:8px auto 0;padding:10px 18px;display:block;letter-spacing:3px}
-.hv{position:absolute;inset:0;z-index:-2;aspect-ratio:auto;border:0;border-radius:0;background:transparent;box-shadow:none;display:block;color:transparent;overflow:hidden}
-.hv img{width:100%;height:100%;object-fit:cover;object-position:center;opacity:.86}
+.hero .btn{display:none}
+.hero .btn.ol{display:none}
+.hv{position:absolute;inset:0;z-index:-2;width:100%;height:100%;border:0;border-radius:0;background:radial-gradient(ellipse at center,#3a1a10 0%,#100b08 58%,#050505 100%);box-shadow:none;display:block;color:transparent;overflow:hidden}
+.hv img{width:100%;height:100%;object-fit:cover;object-position:center}
 h2{font:900 clamp(38px,5vw,58px)/1 'Barlow Condensed',Cairo,sans-serif;letter-spacing:1px;text-transform:uppercase;margin:68px 0 28px}
 #best,#menu,#offers{padding-top:8px;padding-bottom:8px}
 .tabs{display:flex;gap:9px;overflow-x:auto;margin-bottom:24px;padding-bottom:8px}
@@ -46,12 +46,12 @@ input,textarea{width:100%;background:#0b0b0b;border:1px solid #39332d;color:var(
 button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #fff;outline-offset:2px}
 @media(max-width:800px){
  header{height:66px;padding:8px 14px}nav{display:none}section{padding-inline:16px}
- .hero{min-height:calc(100svh - 66px);padding:52px 22px 42px;align-items:flex-end}
- .hero:before{background:linear-gradient(0deg,rgba(0,0,0,.94) 0%,rgba(0,0,0,.64) 48%,rgba(0,0,0,.08) 100%),linear-gradient(90deg,rgba(0,0,0,.22),transparent)}
- .hv img{object-position:center;opacity:.8}
+ .hero{min-height:calc(100svh - 66px);padding:0;align-items:stretch}
+ .hero:before{display:none}
+ .hv img{width:100%;height:100%;object-fit:cover;object-position:center}
  h1{font-size:clamp(54px,14vw,82px);margin:15px 0 18px}
  .hero p{font-size:13px;line-height:1.8}
- .hero .btn{width:100%;padding:16px}.hero .btn.ol{margin-top:5px}
+ .hero .btn{display:none}.hero .btn.ol{display:none}
  h2{margin:50px 0 22px}
  .grid{gap:28px}.im{height:auto;aspect-ratio:1.08}
  .cb{padding-top:14px}.cb h3{font-size:27px}.cb p{font-size:13px;margin-bottom:14px}
@@ -65,12 +65,12 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #fff;
 .hero-copy{display:none!important}
 .hero .hv{position:absolute;inset:0;width:100%;height:100%;z-index:0;display:block}
 .hero .hv img{width:100%;height:100%;object-fit:cover;object-position:center}
-.hero:before{content:none!important}
-@media(max-width:800px){.hero{height:calc(100svh - 66px);min-height:620px;padding:0}.hero .hv img{object-fit:cover;object-position:center}}
+.hero:before{display:none}
+@media(max-width:800px){.hero{height:calc(100svh - 66px);min-height:620px;padding:0}.hero .hv img{width:100%;height:100%;object-fit:cover;object-position:center}}
 </style></head><body>
 <header><a id="logo" href="#"></a><nav><a href="#">الرئيسية</a><a href="#menu">المنيو</a><a href="#offers">العروض</a><a href="#about">من نحن</a><a href="#about">تواصل معنا</a></nav>
 <div class="hd"><a class="ic" href="#menu" style="display:grid;place-items:center" aria-label="بحث">⌕</a><button class="ic or" id="cb" aria-label="السلة">٠</button></div></header>
-<section class="hero"><div class="hero-copy"><div class="eb" id="he"></div><h1 id="ht"></h1><p id="hp"></p><div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px"><a class="btn" href="#menu">ENTER THE MENU&nbsp; →</a><a class="btn ol" href="#offers">VIEW OFFERS</a></div></div><div class="hv" id="hv">مكان صورة البرجر الحقيقية</div></section>
+<section class="hero" aria-label="Burger hero"><div class="hv" id="hv" aria-hidden="true"></div></section>
 <section id="best" hidden><h2>الأكثر مبيعًا</h2><div class="grid" id="bg"></div></section>
 <section id="menu"><h2>المنيو</h2><div class="tabs" id="tabs"></div><div class="grid" id="mg"></div></section>
 <section id="offers" hidden><h2>العروض والوجبات المميزة</h2><div id="og"></div></section>
