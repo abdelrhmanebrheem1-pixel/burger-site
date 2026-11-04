@@ -110,7 +110,7 @@ async function init(){
  D=await (await fetch('/api/public')).json();const s=D.settings;document.title=s.name;
  $('#logo').innerHTML=s.logo?`<img src="${esc(s.logo)}" alt="${esc(s.name)}">`:esc(s.name);
  /* Hero artwork is managed in the repository for this preview. */
- $('#hv').innerHTML=img('/E54AA528-463D-49B3-BADE-299A51D83CFD.png');
+ $('#hv').innerHTML='<img src="/E54AA528-463D-49B3-BADE-299A51D83CFD.png" alt="برجر" loading="eager" fetchpriority="high">';
  $('#fh').textContent='مواعيد العمل: '+s.hours;$('#fp').textContent='الهاتف: '+s.phone;$('#fa').textContent='العنوان: '+s.address;
  $('#fs').innerHTML=s.social.split('\n').map(l=>l.split('|')).filter(x=>/^https?:/.test(x[1]||'')).map(x=>`<a href="${esc(x[1].trim())}" target="_blank" rel="noopener">${esc(x[0])}</a>`).join('');
  const f=D.products.filter(p=>p.featured);$('#best').hidden=!f.length;$('#bg').innerHTML=f.map(card).join('');
