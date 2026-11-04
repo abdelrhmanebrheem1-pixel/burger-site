@@ -67,6 +67,30 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #fff;
 .hero .hv img{width:100%;height:100%;object-fit:cover;object-position:center;opacity:.82}.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.12),rgba(0,0,0,.78)),linear-gradient(0deg,rgba(0,0,0,.36),transparent 60%);z-index:1;pointer-events:none}.hero h1{font-family:Cairo,Tahoma,sans-serif;font-size:clamp(48px,8vw,90px);line-height:1.12;letter-spacing:0;text-transform:none;margin:14px 0 18px}.hero .eb{font-family:Cairo,Tahoma,sans-serif;letter-spacing:5px;font-size:15px}.hero p{font-size:clamp(16px,2vw,21px);line-height:2;max-width:600px}.hero .btn.ol{display:inline-block;width:auto;margin:16px 0 0;background:#f23d16;border:0;color:white;padding:16px 38px;letter-spacing:1px}
 .hero:before{display:none}
 @media(max-width:800px){.hero{height:calc(100svh - 66px);min-height:620px;padding:0}.hero .hv img{width:100%;height:100%;object-fit:cover;object-position:center}}
+
+/* BLACK ANVIL-inspired Arabic hero refinement */
+header{height:78px;background:rgba(8,8,8,.92);border-bottom:1px solid #ffffff18;padding-inline:clamp(18px,7vw,100px)}
+#logo{font:900 clamp(20px,2.5vw,30px)/1 'Barlow Condensed',Cairo,sans-serif;letter-spacing:1.5px;text-transform:uppercase}
+#cb:before{content:"السلة";font:700 12px Cairo;letter-spacing:1px}
+.hero{height:calc(100svh - 78px);min-height:620px;padding-inline:clamp(22px,8vw,120px)}
+.hero .hv img{opacity:.76;object-position:center 48%;filter:saturate(1.08) contrast(1.08)}
+.hero:after{background:linear-gradient(90deg,rgba(0,0,0,.12) 0%,rgba(0,0,0,.38) 48%,rgba(0,0,0,.78) 100%),linear-gradient(0deg,rgba(0,0,0,.55),transparent 62%)}
+.hero-copy{max-width:760px}
+.hero .eb{font-size:13px;letter-spacing:4px;color:#ff4a20}
+.hero h1{font:900 clamp(58px,9vw,116px)/1.02 Cairo,Tahoma,sans-serif;max-width:760px;text-shadow:0 5px 28px #000}
+.hero p{font-size:clamp(15px,1.7vw,20px);max-width:570px;color:#e6ded7}
+.hero .btn.ol{min-width:min(440px,100%);text-align:center;padding:18px 28px;font-size:15px;font-weight:900;letter-spacing:2px;box-shadow:0 10px 34px #e32d1240}
+@media(max-width:800px){
+ header{height:66px}
+ .hero{height:calc(100svh - 66px);min-height:680px;padding-inline:22px}
+ .hero .hv img{object-position:54% center;opacity:.7}
+ .hero:after{background:linear-gradient(0deg,rgba(0,0,0,.82),rgba(0,0,0,.12) 75%),linear-gradient(90deg,rgba(0,0,0,.18),rgba(0,0,0,.45))}
+ .hero-copy{width:100%;padding:24px 0;text-align:right}
+ .hero h1{font-size:clamp(54px,14vw,82px)}
+ .hero p{font-size:14px;line-height:1.9}
+ .hero .btn.ol{width:100%;min-width:0}
+}
+
 </style></head><body>
 <header><a id="logo" href="#"></a><nav><a href="#">الرئيسية</a><a href="#menu">المنيو</a><a href="#offers">العروض</a><a href="#about">من نحن</a><a href="#about">تواصل معنا</a></nav>
 <div class="hd"><a class="ic" href="#menu" style="display:grid;place-items:center" aria-label="بحث">⌕</a><button class="ic or" id="cb" aria-label="السلة">٠</button></div></header>
@@ -85,8 +109,8 @@ const card=p=>`<article class="card"><div class="im">${p.badge?`<b class="bd">${
 async function init(){
  D=await (await fetch('/api/public')).json();const s=D.settings;document.title=s.name;
  $('#logo').innerHTML=s.logo?`<img src="${esc(s.logo)}" alt="${esc(s.name)}">`:esc(s.name);
- $('#he').textContent=s.hero_eyebrow;$('#ht').textContent=s.hero_title;$('#hp').textContent=s.hero_text;
- if(s.hero_image)$('#hv').innerHTML=img(s.hero_image);
+ /* Hero artwork is managed in the repository for this preview. */
+ $('#hv').innerHTML=img('/E54AA528-463D-49B3-BADE-299A51D83CFD.png');
  $('#fh').textContent='مواعيد العمل: '+s.hours;$('#fp').textContent='الهاتف: '+s.phone;$('#fa').textContent='العنوان: '+s.address;
  $('#fs').innerHTML=s.social.split('\n').map(l=>l.split('|')).filter(x=>/^https?:/.test(x[1]||'')).map(x=>`<a href="${esc(x[1].trim())}" target="_blank" rel="noopener">${esc(x[0])}</a>`).join('');
  const f=D.products.filter(p=>p.featured);$('#best').hidden=!f.length;$('#bg').innerHTML=f.map(card).join('');
