@@ -201,6 +201,31 @@ export async function onRequest({ request: req, env, params }) {
       return J({ error: 'غير مصرح' }, 401);
     }
 
+    if (p[1] === 'upload' && m === 'POST') {
+      if (!env.GITHUB_TOKEN) return J({ error: 'يلزم إعداد GITHUB_TOKEN في Cloudflare Pages Preview Secrets' }, 503);
+      const type = req.headers.get('content-type') || '';
+      const ext = ({ 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp' })[type];
+      if (!ext) return J({ error: 'ارفع JPG أو PNG أو WebP فقط' }, 415);
+      const buf = await req.arrayBuffer();
+      if (!buf.byteLength || buf.byteLength > 4 * 1024 * 1024) return J({ error: 'الحد الأقصى 4 ميجابايت' }, 413);
+      const bytes = new Uint8Array(buf);
+      const png = bytes.length >= 8 && [137,80,78,71,13,10,26,10].every((v,i)=>bytes[i]===v);
+      const jpg = bytes.length >= 3 && bytes[0]===255 && bytes[1]===216 && bytes[2]===255;
+      const webp = bytes.length >= 12 && String.fromCharCode(...bytes.slice(0,4))==='RIFF' && String.fromCharCode(...bytes.slice(8,12))==='WEBP';
+      if (!(type==='image/png'&&png || type==='image/jpeg'&&jpg || type==='image/webp'&&webp)) return J({ error: 'نوع الملف لا يطابق محتوى الصورة' }, 415);
+      let binary = '';
+      for (let i=0; i<bytes.length; i+=32768) binary += String.fromCharCode(...bytes.subarray(i, Math.min(i+32768, bytes.length)));
+      const path = 'public/images/' + crypto.randomUUID() + '.' + ext;
+      const gh = await fetch('https://api.github.com/repos/abdelrhmanebrheem1-pixel/burger-site/contents/' + path, {
+        method: 'PUT',
+        headers: { 'Authorization': 'Bearer ' + env.GITHUB_TOKEN, 'Accept': 'application/vnd.github+json', 'Content-Type': 'application/json', 'X-GitHub-Api-Version': '2022-11-28' },
+        body: JSON.stringify({ message: 'Upload restaurant image', content: btoa(binary), branch: 'preview-release' })
+      });
+      if (!gh.ok) return J({ error: gh.status===401||gh.status===403 ? 'صلاحية GitHub غير كافية؛ يلزم Contents Read and write' : 'تعذر حفظ الصورة في GitHub (' + gh.status + ')' }, 502);
+      const saved = await gh.json();
+      return J({ url: saved.content?.download_url || 'https://raw.githubusercontent.com/abdelrhmanebrheem1-pixel/burger-site/preview-release/' + path, path });
+    }
+
     const id = p[2];
 
     if (p[1] === 'me') return J({ ok: 1 });
