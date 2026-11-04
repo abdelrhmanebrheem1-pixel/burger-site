@@ -174,11 +174,11 @@ export async function onRequest({ request: req, env, params }) {
     if (p[0] === 'login' && m === 'POST') {
       const b = await req.json();
 
-      if (
-        !env.ADMIN_PASSWORD ||
-        !env.SESSION_SECRET ||
-        !eq(await sha(String(b.password || '')), await sha(env.ADMIN_PASSWORD))
-      ) {
+      if (!env.ADMIN_PASSWORD || !env.SESSION_SECRET) {
+        return J({ error: 'إعدادات تسجيل الدخول غير مكتملة في بيئة النشر. راجع ADMIN_PASSWORD وSESSION_SECRET في إعدادات هذه البيئة.' }, 503);
+      }
+
+      if (!eq(await sha(String(b.password || '')), await sha(env.ADMIN_PASSWORD))) {
         return J({ error: 'كلمة المرور غير صحيحة' }, 401);
       }
 
