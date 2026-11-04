@@ -139,26 +139,21 @@ function nav(){
 }
 
 function login(){
- $('#m').innerHTML='<h1>تسجيل الدخول</h1><div style="max-width:360px"><label for="pw">كلمة المرور</label><div style="display:flex;gap:8px;align-items:center"><input id="pw" type="password" inputmode="text" autocomplete="current-password" autocapitalize="off" spellcheck="false" style="flex:1;min-width:0"><button type="button" class="pl" id="togglePw" aria-label="إظهار كلمة المرور">إظهار</button></div><button class="btn" id="li">دخول</button></div>';
  $('#nv').innerHTML='';
+ $('#m').innerHTML='<h1>تسجيل الدخول</h1><form id="loginForm" autocomplete="on" style="max-width:360px"><label for="pw">كلمة المرور</label><input id="pw" name="password" type="password" autocomplete="current-password" autocapitalize="none" autocorrect="off" spellcheck="false" enterkeyhint="go" style="display:block;width:100%;min-height:52px;direction:ltr;text-align:left;position:relative;z-index:2;pointer-events:auto;touch-action:manipulation;-webkit-user-select:text;user-select:text"><button type="button" class="pl" id="togglePw">إظهار كلمة المرور</button><button class="btn" id="li" type="submit">دخول</button></form>';
+ const p=$('#pw'),f=$('#loginForm');
  $('#togglePw').onclick=()=>{
-  const p=$('#pw'),show=p.type==='password';
-  p.type=show?'text':'password';
-  $('#togglePw').textContent=show?'إخفاء':'إظهار';
-  $('#togglePw').setAttribute('aria-label',show?'إخفاء كلمة المرور':'إظهار كلمة المرور');
+  const reveal=p.type==='password';
+  p.type=reveal?'text':'password';
+  $('#togglePw').textContent=reveal?'إخفاء كلمة المرور':'إظهار كلمة المرور';
+  p.focus();
  };
-
- const go=async()=>{
-  const r=await fetch('/api/login',{
-   method:'POST',
-   headers:{'content-type':'application/json'},
-   body:JSON.stringify({password:$('#pw').value})
-  });
-  r.ok?show('home'):alert('كلمة المرور غير صحيحة');
+ f.onsubmit=async e=>{
+  e.preventDefault();
+  const r=await fetch('/api/login',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({password:p.value})});
+  if(r.ok)show('home');
+  else alert('كلمة المرور غير صحيحة');
  };
-
- $('#li').onclick=go;
- $('#pw').onkeydown=e=>e.key==='Enter'&&go();
 }
 
 async function show(t){
