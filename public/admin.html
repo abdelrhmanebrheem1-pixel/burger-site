@@ -151,8 +151,9 @@ function login(){
  f.onsubmit=async e=>{
   e.preventDefault();
   const r=await fetch('/api/login',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({password:p.value})});
+  const data=await r.json().catch(()=>({}));
   if(r.ok)show('home');
-  else alert('كلمة المرور غير صحيحة');
+  else alert(data.error || (r.status===503?'إعدادات تسجيل الدخول غير مكتملة في بيئة Preview':'تعذر تسجيل الدخول ('+r.status+')'));
  };
 }
 
