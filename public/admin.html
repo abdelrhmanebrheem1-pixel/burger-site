@@ -150,10 +150,28 @@ function login(){
  };
  f.onsubmit=async e=>{
   e.preventDefault();
-  const r=await fetch('/api/login',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({password:p.value})});
-  const data=await r.json().catch(()=>({}));
-  if(r.ok)show('home');
-  else alert(data.error || (r.status===503?'إعدادات تسجيل الدخول غير مكتملة في بيئة Preview':'تعذر تسجيل الدخول ('+r.status+')'));
+  const button=$('#li');
+  button.disabled=true;
+  button.textContent='جارٍ التحقق...';
+  try{
+   const r=await fetch('/api/login',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({password:p.value})});
+   const data=await r.json().catch(()=>({}));
+   if(!r.ok){
+    alert((data.error||'تعذر تسجيل الدخول')+(data.code?' ['+data.code+']':'')+' ('+r.status+')');
+    return;
+   }
+   const check=await fetch('/api/admin/me',{cache:'no-store'});
+   if(!check.ok){
+    alert('تم قبول كلمة المرور لكن تعذر تأكيد الجلسة. حدّث الصفحة وافحص إعدادات SESSION_SECRET.');
+    return;
+   }
+   await show('home');
+  }catch(err){
+   alert('تعذر الاتصال بالخادم. تحقق من اتصال الإنترنت وحالة نشر Preview.');
+  }finally{
+   button.disabled=false;
+   button.textContent='دخول';
+  }
  };
 }
 
