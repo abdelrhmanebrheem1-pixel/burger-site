@@ -73,8 +73,8 @@ header{height:78px;background:rgba(8,8,8,.92);border-bottom:1px solid #ffffff18;
 #logo{font:900 clamp(20px,2.5vw,30px)/1 'Barlow Condensed',Cairo,sans-serif;letter-spacing:1.5px;text-transform:uppercase}
 #cb:before{content:"السلة";font:700 12px Cairo;letter-spacing:1px}
 .hero{height:calc(100svh - 78px);min-height:620px;padding-inline:clamp(22px,8vw,120px)}
-.hero .hv img{opacity:.76;object-position:center 48%;filter:saturate(1.08) contrast(1.08)}
-.hero:after{background:linear-gradient(90deg,rgba(0,0,0,.12) 0%,rgba(0,0,0,.38) 48%,rgba(0,0,0,.78) 100%),linear-gradient(0deg,rgba(0,0,0,.55),transparent 62%)}
+.hero .hv img{opacity:1!important;object-fit:cover;object-position:center 48%;filter:saturate(1.18) contrast(1.12) brightness(1.08)}
+.hero:after{background:linear-gradient(90deg,rgba(0,0,0,.12) 0%,rgba(0,0,0,.18) 48%,rgba(0,0,0,.48) 100%),linear-gradient(0deg,rgba(0,0,0,.28),transparent 62%)}
 .hero-copy{max-width:760px}
 .hero .eb{font-size:13px;letter-spacing:4px;color:#ff4a20}
 .hero h1{font:900 clamp(58px,9vw,116px)/1.02 Cairo,Tahoma,sans-serif;max-width:760px;text-shadow:0 5px 28px #000}
@@ -83,7 +83,7 @@ header{height:78px;background:rgba(8,8,8,.92);border-bottom:1px solid #ffffff18;
 @media(max-width:800px){
  header{height:66px}
  .hero{height:calc(100svh - 66px);min-height:680px;padding-inline:22px}
- .hero .hv img{object-position:54% center;opacity:.7}
+ .hero .hv img{object-position:54% center;opacity:1!important;filter:saturate(1.18) contrast(1.1) brightness(1.08)}
  .hero:after{background:linear-gradient(0deg,rgba(0,0,0,.82),rgba(0,0,0,.12) 75%),linear-gradient(90deg,rgba(0,0,0,.18),rgba(0,0,0,.45))}
  .hero-copy{width:100%;padding:24px 0;text-align:right}
  .hero h1{font-size:clamp(54px,14vw,82px)}
