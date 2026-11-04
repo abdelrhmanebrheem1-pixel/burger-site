@@ -59,6 +59,14 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #fff;
  .offer{flex-direction:column;align-items:flex-start;padding:24px}
  footer{padding-inline:16px;margin-top:48px}
 }
+
+/* Image-only hero requested: no headline, copy or menu CTA */
+.hero{min-height:calc(100svh - 76px);height:calc(100svh - 76px);padding:0;display:block;position:relative;background:#050505;overflow:hidden}
+.hero-copy{display:none!important}
+.hero .hv{position:absolute;inset:0;width:100%;height:100%;z-index:0;display:block}
+.hero .hv img{width:100%;height:100%;object-fit:cover;object-position:center}
+.hero:before{content:none!important}
+@media(max-width:800px){.hero{height:calc(100svh - 66px);min-height:620px;padding:0}.hero .hv img{object-fit:cover;object-position:center}}
 </style></head><body>
 <header><a id="logo" href="#"></a><nav><a href="#">الرئيسية</a><a href="#menu">المنيو</a><a href="#offers">العروض</a><a href="#about">من نحن</a><a href="#about">تواصل معنا</a></nav>
 <div class="hd"><a class="ic" href="#menu" style="display:grid;place-items:center" aria-label="بحث">⌕</a><button class="ic or" id="cb" aria-label="السلة">٠</button></div></header>
