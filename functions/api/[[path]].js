@@ -174,8 +174,14 @@ export async function onRequest({ request: req, env, params }) {
     if (p[0] === 'login' && m === 'POST') {
       const b = await req.json();
 
-      if (!env.ADMIN_PASSWORD || !env.SESSION_SECRET) {
-        return J({ error: 'إعدادات تسجيل الدخول غير مكتملة في بيئة النشر. راجع ADMIN_PASSWORD وSESSION_SECRET في إعدادات هذه البيئة.' }, 503);
+      const missingAuthSecrets = [
+        !env.ADMIN_PASSWORD ? 'ADMIN_PASSWORD' : null,
+        !env.SESSION_SECRET ? 'SESSION_SECRET' : null
+      ].filter(Boolean);
+      if (missingAuthSecrets.length) {
+        return J({
+          error: 'إعدادات تسجيل الدخول غير مكتملة في بيئة Preview. المتغير غير الموجود: ' + missingAuthSecrets.join(' و ')
+        }, 503);
       }
 
       const suppliedPassword = String(b.password ?? '').trim();
