@@ -6,6 +6,8 @@ const J = (d, s = 200, h = {}) =>
     status: s,
     headers: {
       'content-type': 'application/json; charset=utf-8',
+      'cache-control': 'no-store, no-cache, must-revalidate',
+      'pragma': 'no-cache',
       ...h
     }
   });
@@ -57,6 +59,7 @@ const val = v =>
         : v;
 
 async function isAdmin(req, env) {
+  if (typeof env.SESSION_SECRET !== 'string' || env.SESSION_SECRET.trim().length < 32) return false;
   const m = (req.headers.get('cookie') || '').match(/(?:^|; )s=(\d+)\.([0-9a-f]+)/);
   return !!m &&
     !!env.SESSION_SECRET &&
@@ -171,12 +174,22 @@ export async function onRequest({ request: req, env, params }) {
       return J({ code, total: sub + del });
     }
 
+    if (p[0] === 'auth-status' && m === 'GET') {
+      return J({
+        adminPasswordConfigured: typeof env.ADMIN_PASSWORD === 'string' && env.ADMIN_PASSWORD.trim().length > 0,
+        sessionSecretConfigured: typeof env.SESSION_SECRET === 'string' && env.SESSION_SECRET.trim().length >= 32,
+        dbConfigured: !!env.DB,
+        host: new URL(req.url).host
+      });
+    }
+
     if (p[0] === 'login' && m === 'POST') {
       const b = await req.json();
 
       const missingAuthSecrets = [
-        !env.ADMIN_PASSWORD ? 'ADMIN_PASSWORD' : null,
-        !env.SESSION_SECRET ? 'SESSION_SECRET' : null
+        (typeof env.ADMIN_PASSWORD !== 'string' || !env.ADMIN_PASSWORD.trim()) ? 'ADMIN_PASSWORD' : null,
+        (typeof env.SESSION_SECRET !== 'string' || !env.SESSION_SECRET.trim()) ? 'SESSION_SECRET' : null,
+        (typeof env.SESSION_SECRET === 'string' && env.SESSION_SECRET.trim().length > 0 && env.SESSION_SECRET.trim().length < 32) ? 'SESSION_SECRET_WEAK' : null
       ].filter(Boolean);
       if (missingAuthSecrets.length) {
         return J({
@@ -186,6 +199,7 @@ export async function onRequest({ request: req, env, params }) {
 
       const suppliedPassword = String(b.password ?? '').trim();
       const configuredPassword = String(env.ADMIN_PASSWORD).trim();
+      if (!suppliedPassword) return J({ error: 'أدخل كلمة المرور', code: 'BAD_REQUEST' }, 400);
 
       if (!eq(await sha(suppliedPassword), await sha(configuredPassword))) {
         return J({ error: 'كلمة المرور غير صحيحة. تأكد من إدخالها كما حُفظت في Secret الخاص ببيئة Preview.' }, 401);
@@ -199,6 +213,7 @@ export async function onRequest({ request: req, env, params }) {
     }
 
     if (p[0] === 'logout') {
+      if (m !== 'POST') return J({ error: 'Method Not Allowed', code: 'METHOD_NOT_ALLOWED' }, 405, { allow: 'POST' });
       return J({ ok: 1 }, 200, {
         'set-cookie': 's=; Max-Age=0; Path=/; HttpOnly; Secure'
       });
