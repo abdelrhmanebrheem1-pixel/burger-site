@@ -178,8 +178,11 @@ export async function onRequest({ request: req, env, params }) {
         return J({ error: 'إعدادات تسجيل الدخول غير مكتملة في بيئة النشر. راجع ADMIN_PASSWORD وSESSION_SECRET في إعدادات هذه البيئة.' }, 503);
       }
 
-      if (!eq(await sha(String(b.password || '')), await sha(env.ADMIN_PASSWORD))) {
-        return J({ error: 'كلمة المرور غير صحيحة' }, 401);
+      const suppliedPassword = String(b.password ?? '').trim();
+      const configuredPassword = String(env.ADMIN_PASSWORD).trim();
+
+      if (!eq(await sha(suppliedPassword), await sha(configuredPassword))) {
+        return J({ error: 'كلمة المرور غير صحيحة. تأكد من إدخالها كما حُفظت في Secret الخاص ببيئة Preview.' }, 401);
       }
 
       const exp = Date.now() + 7 * 864e5;
