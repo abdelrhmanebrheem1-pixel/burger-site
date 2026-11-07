@@ -1,54 +1,100 @@
 <!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>المطعم</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0d0c0b;--card:#181615;--line:#2a2622;--ink:#f4ead8;--mute:#b9ab97;--or:#ff6b1f}
-*{box-sizing:border-box}html{scroll-behavior:smooth;color-scheme:dark}
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@600;700;800;900&display=swap');
+:root{--bg:#080808;--card:#111;--line:#292521;--ink:#f7f3ec;--mute:#b5ada4;--or:#f23d16;--or2:#ff5527}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:82px;color-scheme:dark}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:Cairo,Tahoma,sans-serif;padding-bottom:90px}
 a{color:inherit;text-decoration:none}
-header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 44px;border-bottom:1px solid var(--line)}
-#logo{color:var(--or);font-weight:800;font-size:24px}#logo img{height:40px}
-nav{display:flex;gap:28px;font-size:15px}.hd{display:flex;gap:10px}
-.ic{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:none;color:var(--ink);cursor:pointer;font:800 15px Cairo}
-.ic.or{background:var(--or);border-color:var(--or);color:#1a0d04}
-section{padding:0 44px;max-width:1280px;margin:0 auto}
-.hero{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;padding-top:50px;padding-bottom:50px}
-.eb{color:var(--or);font-size:15px}
-h1{font-size:clamp(44px,7vw,92px);line-height:1.05;margin:14px 0 18px;font-weight:800}
-.hero p{color:var(--mute);line-height:2;font-size:17px;max-width:520px}
-.btn{background:var(--or);color:#1a0d04;border:0;border-radius:999px;padding:14px 34px;font:800 16px Cairo;cursor:pointer;display:inline-block}
-.btn.ol{background:none;color:var(--ink);border:1px solid var(--ink);font-weight:600}.btn.sm{padding:9px 20px;font-size:14px}
-.hv{aspect-ratio:1;border-radius:28px;border:2px dashed #4a3f35;background:var(--card);display:grid;place-items:center;color:var(--mute);overflow:hidden}
-.hv img{width:100%;height:100%;object-fit:cover}
-h2{font-size:38px;margin:50px 0 22px;font-weight:800}
-.tabs{display:flex;gap:10px;overflow-x:auto;margin-bottom:22px}
-.tab{flex:none;border:1px solid var(--line);background:none;color:var(--ink);padding:10px 22px;border-radius:999px;font:600 15px Cairo;cursor:pointer}
-.tab.on{background:var(--or);border-color:var(--or);color:#1a0d04}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:22px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:24px;overflow:hidden}
-.im{height:210px;background:#1f1c1a;display:grid;place-items:center;color:var(--mute);font-size:14px;position:relative}
-.im img{width:100%;height:100%;object-fit:cover}
-.bd{position:absolute;top:14px;inset-inline-end:14px;background:var(--or);color:#1a0d04;font-size:12px;padding:4px 14px;border-radius:999px}
-.cb{padding:20px}.cb h3{margin:0 0 6px;font-size:20px}.cb p{margin:0 0 18px;color:var(--mute);font-size:14px;line-height:1.7}
-.rw{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.pr{color:var(--or);font-weight:800;font-size:19px}.pr s{color:var(--mute);font-size:13px;font-weight:400}.na{color:#e5645a;font-size:14px}
-.offer{display:flex;align-items:center;justify-content:space-between;gap:20px;background:linear-gradient(135deg,#1f140d,#17110d);border:1px solid #3a2a1e;border-radius:28px;padding:36px 40px;margin-bottom:18px}
-.offer h3{font-size:32px;margin:6px 0}.offer small{color:var(--mute)}
-footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;color:var(--mute);font-size:14px;padding:34px 44px;border-top:1px solid var(--line);margin-top:60px}
-footer a{color:var(--or);margin-inline-start:12px}
-dialog{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:24px;padding:0;width:min(520px,94vw);max-height:90vh}
-dialog::backdrop{background:#000a}.dl{padding:22px}.dl .im{border-radius:16px;margin-bottom:14px}
-.ck{display:block;padding:8px 0;border-bottom:1px solid var(--line)}.ck em{color:var(--or);font-style:normal}
-.qt{display:flex;align-items:center;gap:12px}.qt button{width:34px;height:34px;border-radius:50%;border:0;background:var(--or);font:800 18px Cairo;cursor:pointer}
-input,textarea{width:100%;background:var(--bg);border:1px solid var(--line);color:var(--ink);border-radius:14px;padding:12px;font:inherit;margin:6px 0}
-.ci{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);gap:8px}
-.bar{display:none;position:fixed;inset:auto 0 0;background:var(--card);border-top:1px solid var(--line);padding:12px 20px calc(12px + env(safe-area-inset-bottom,0));align-items:center;justify-content:space-between;z-index:9}
-.bar.on{display:flex}.err{color:#e5645a;font-size:14px}
-button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
-@media(max-width:800px){header,section,footer{padding-inline:20px}nav{display:none}.hero{grid-template-columns:1fr}.hv{aspect-ratio:4/3;order:2}.offer{flex-direction:column;align-items:flex-start}}
+header{height:76px;position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:10px clamp(18px,5vw,70px);border-bottom:1px solid #ffffff12;background:rgba(7,7,7,.96);backdrop-filter:blur(14px)}
+#logo{color:#fff;font-weight:900;font-size:24px;letter-spacing:1px}#logo img{height:42px;max-width:150px;object-fit:contain}
+nav{display:flex;gap:26px;font-size:12px;font-weight:800;letter-spacing:1.5px;color:#e6e0da}nav a:hover{color:var(--or)}
+.hd{display:flex;gap:10px;align-items:center}.ic{min-width:43px;height:43px;border:0;background:transparent;color:var(--ink);cursor:pointer;font:700 12px Cairo;letter-spacing:2px}.ic.or{color:var(--or);font:800 15px Cairo;letter-spacing:1px}#cb{display:flex;align-items:center;gap:12px}#cb:before{content:"CART";color:#eee;font:700 11px 'Barlow Condensed',Cairo,sans-serif;letter-spacing:3px}#cb{font-size:14px}
+section{padding:0 clamp(18px,6vw,88px);max-width:1320px;margin:0 auto}
+.hero{position:relative;isolation:isolate;display:block;min-height:calc(100svh - 76px);width:100%;max-width:none;margin:0;padding:0;overflow:hidden;background:#080808}
+.hero:before{display:none}
+.hero>div:first-child{display:block!important}
+.eb{color:var(--or2);font:700 12px 'Barlow Condensed',Cairo,sans-serif;letter-spacing:5px;text-transform:uppercase}
+h1{font:900 clamp(54px,8.4vw,112px)/.91 'Barlow Condensed',Cairo,sans-serif;letter-spacing:-1px;text-transform:uppercase;margin:18px 0 24px;max-width:760px}
+.hero p{color:#ded7d0;line-height:1.9;font-size:clamp(14px,1.5vw,17px);max-width:530px}
+.hero .btn{display:none}
+.hero .btn.ol{display:none}
+.hv{position:absolute;inset:0;z-index:-2;width:100%;height:100%;border:0;border-radius:0;background:radial-gradient(ellipse at center,#3a1a10 0%,#100b08 58%,#050505 100%);box-shadow:none;display:block;color:transparent;overflow:hidden}
+.hv img{width:100%;height:100%;object-fit:cover;object-position:center}
+h2{font:900 clamp(38px,5vw,58px)/1 'Barlow Condensed',Cairo,sans-serif;letter-spacing:1px;text-transform:uppercase;margin:68px 0 28px}
+#best,#menu,#offers{padding-top:8px;padding-bottom:8px}
+.tabs{display:flex;gap:9px;overflow-x:auto;margin-bottom:24px;padding-bottom:8px}
+.tab{flex:none;border:1px solid #39332d;background:#101010;color:#eee;padding:9px 20px;border-radius:0;font:700 12px Cairo;cursor:pointer}
+.tab.on{background:var(--or);border-color:var(--or);color:#fff}
+.grid{display:flex;flex-direction:column;gap:34px}
+.card{width:100%;background:#0d0d0d;border:0;border-bottom:1px solid #34302c;border-radius:0;overflow:hidden;padding-bottom:28px}
+.im{height:clamp(260px,55vw,590px);background:linear-gradient(145deg,#211b16,#111);display:grid;place-items:center;color:#81766b;font-size:13px;position:relative;overflow:hidden}
+.im img{width:100%;height:100%;object-fit:cover;transition:transform .6s}.card:hover .im img{transform:scale(1.018)}
+.bd{position:absolute;top:18px;inset-inline-end:18px;background:var(--or);color:#fff;font-size:11px;font-weight:900;padding:6px 14px;border-radius:0;z-index:1}
+.cb{padding:18px 2px 0}.cb h3{font:900 clamp(25px,3vw,36px)/1.1 'Barlow Condensed',Cairo,sans-serif;margin:0 0 8px;letter-spacing:.4px}.cb p{margin:0 0 18px;color:#aaa198;font-size:14px;line-height:1.9;max-width:760px}
+.rw{display:flex;align-items:center;justify-content:space-between;gap:12px}.pr{color:var(--or2);font-weight:900;font-size:21px}.pr s{color:#8f877e;font-size:13px;font-weight:400}.na{color:#e5645a;font-size:13px}
+.btn{background:var(--or);color:#fff;border:1px solid var(--or);border-radius:0;padding:12px 24px;font:900 13px Cairo;cursor:pointer;display:inline-block;transition:.2s}.btn:hover{background:var(--or2);transform:translateY(-2px)}.btn.sm{padding:10px 20px}
+.offer{display:flex;align-items:center;justify-content:space-between;gap:20px;background:linear-gradient(110deg,#24120d,#13110f);border:1px solid #4a261b;border-radius:0;padding:clamp(24px,4vw,48px);margin-bottom:16px}
+.offer h3{font:900 clamp(28px,4vw,42px) 'Barlow Condensed',Cairo,sans-serif;margin:7px 0}.offer small{color:#b8a99b}
+footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;color:#9d958c;font-size:13px;padding:36px clamp(18px,6vw,88px);border-top:1px solid #292521;margin-top:76px;background:#080808}footer a{color:var(--or);margin-inline-start:12px}
+dialog{background:#141210;color:var(--ink);border:1px solid #514032;border-radius:2px;padding:0;width:min(520px,94vw);max-height:90vh;box-shadow:0 24px 80px #000b}dialog::backdrop{background:#000c;backdrop-filter:blur(5px)}.dl{padding:22px}.dl .im{height:230px;margin-bottom:14px}
+.ck{display:block;padding:9px 0;border-bottom:1px solid var(--line)}.ck em{color:var(--or);font-style:normal}
+.qt{display:flex;align-items:center;gap:12px}.qt button{width:34px;height:34px;border-radius:0;border:0;background:var(--or);color:#fff;font:800 18px Cairo;cursor:pointer}
+input,textarea{width:100%;background:#0b0b0b;border:1px solid #39332d;color:var(--ink);border-radius:0;padding:12px;font:inherit;margin:6px 0}input:focus,textarea:focus{border-color:var(--or);outline:none}
+.ci{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);gap:8px}
+.bar{display:none;position:fixed;inset:auto 0 0;background:rgba(12,12,12,.97);border-top:1px solid #49301f;padding:12px 20px calc(12px + env(safe-area-inset-bottom,0));align-items:center;justify-content:space-between;z-index:30}.bar.on{display:flex}.err{color:#e5645a;font-size:14px}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #fff;outline-offset:2px}
+@media(max-width:800px){
+ header{height:66px;padding:8px 14px}nav{display:none}section{padding-inline:16px}
+ .hero{min-height:calc(100svh - 66px);padding:0;align-items:stretch}
+ .hero:before{display:none}
+ .hv img{width:100%;height:100%;object-fit:cover;object-position:center}
+ h1{font-size:clamp(54px,14vw,82px);margin:15px 0 18px}
+ .hero p{font-size:13px;line-height:1.8}
+ .hero .btn{display:none}.hero .btn.ol{display:none}
+ h2{margin:50px 0 22px}
+ .grid{gap:28px}.im{height:auto;aspect-ratio:1.08}
+ .cb{padding-top:14px}.cb h3{font-size:27px}.cb p{font-size:13px;margin-bottom:14px}
+ .rw{align-items:center}.pr{font-size:19px}.btn.sm{padding:10px 16px;font-size:12px}
+ .offer{flex-direction:column;align-items:flex-start;padding:24px}
+ footer{padding-inline:16px;margin-top:48px}
+}
+
+/* Image-only hero requested: no headline, copy or menu CTA */
+.hero{min-height:calc(100svh - 76px);height:calc(100svh - 76px);padding:0 clamp(22px,7vw,90px);display:flex;align-items:center;position:relative;background:#050505;overflow:hidden}
+.hero-copy{display:block!important;position:relative;z-index:2;width:min(670px,100%);padding:24px 0;text-align:right;direction:rtl;text-shadow:0 2px 18px #000}
+.hero .hv{position:absolute;inset:0;width:100%;height:100%;z-index:0;display:block;background:#080604}
+.hero .hv img{width:100%;height:100%;object-fit:cover;object-position:center;opacity:.82}.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.12),rgba(0,0,0,.78)),linear-gradient(0deg,rgba(0,0,0,.36),transparent 60%);z-index:1;pointer-events:none}.hero h1{font-family:Cairo,Tahoma,sans-serif;font-size:clamp(48px,8vw,90px);line-height:1.12;letter-spacing:0;text-transform:none;margin:14px 0 18px}.hero .eb{font-family:Cairo,Tahoma,sans-serif;letter-spacing:5px;font-size:15px}.hero p{font-size:clamp(16px,2vw,21px);line-height:2;max-width:600px}.hero .btn.ol{display:inline-block;width:auto;margin:16px 0 0;background:#f23d16;border:0;color:white;padding:16px 38px;letter-spacing:1px}
+.hero:before{display:none}
+@media(max-width:800px){.hero{height:calc(100svh - 66px);min-height:620px;padding:0}.hero .hv img{width:100%;height:100%;object-fit:cover;object-position:center}}
+
+/* BLACK ANVIL-inspired Arabic hero refinement */
+header{height:78px;background:rgba(8,8,8,.92);border-bottom:1px solid #ffffff18;padding-inline:clamp(18px,7vw,100px)}
+#logo{font:900 clamp(20px,2.5vw,30px)/1 'Barlow Condensed',Cairo,sans-serif;letter-spacing:1.5px;text-transform:uppercase}
+#cb:before{content:"السلة";font:700 12px Cairo;letter-spacing:1px}
+.hero{height:calc(100svh - 78px);min-height:620px;padding-inline:clamp(22px,8vw,120px)}
+.hero .hv img{opacity:1!important;object-fit:cover;object-position:center 48%;filter:saturate(1.18) contrast(1.12) brightness(1.08)}
+.hero:after{background:linear-gradient(90deg,rgba(0,0,0,.12) 0%,rgba(0,0,0,.18) 48%,rgba(0,0,0,.48) 100%),linear-gradient(0deg,rgba(0,0,0,.28),transparent 62%)}
+.hero-copy{max-width:760px}
+.hero .eb{font-size:13px;letter-spacing:4px;color:#ff4a20}
+.hero h1{font:900 clamp(58px,9vw,116px)/1.02 Cairo,Tahoma,sans-serif;max-width:760px;text-shadow:0 5px 28px #000}
+.hero p{font-size:clamp(15px,1.7vw,20px);max-width:570px;color:#e6ded7}
+.hero .btn.ol{min-width:min(440px,100%);text-align:center;padding:18px 28px;font-size:15px;font-weight:900;letter-spacing:2px;box-shadow:0 10px 34px #e32d1240}
+@media(max-width:800px){
+ header{height:66px}
+ .hero{height:calc(100svh - 66px);min-height:680px;padding-inline:22px}
+ .hero .hv img{object-position:54% center;opacity:1!important;filter:saturate(1.18) contrast(1.1) brightness(1.08)}
+ .hero:after{background:linear-gradient(0deg,rgba(0,0,0,.82),rgba(0,0,0,.12) 75%),linear-gradient(90deg,rgba(0,0,0,.18),rgba(0,0,0,.45))}
+ .hero-copy{width:100%;padding:24px 0;text-align:right}
+ .hero h1{font-size:clamp(54px,14vw,82px)}
+ .hero p{font-size:14px;line-height:1.9}
+ .hero .btn.ol{width:100%;min-width:0}
+}
+
 </style></head><body>
 <header><a id="logo" href="#"></a><nav><a href="#">الرئيسية</a><a href="#menu">المنيو</a><a href="#offers">العروض</a><a href="#about">من نحن</a><a href="#about">تواصل معنا</a></nav>
 <div class="hd"><a class="ic" href="#menu" style="display:grid;place-items:center" aria-label="بحث">⌕</a><button class="ic or" id="cb" aria-label="السلة">٠</button></div></header>
-<section class="hero"><div><div class="eb" id="he"></div><h1 id="ht"></h1><p id="hp"></p><div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px"><a class="btn" href="#menu">اطلب الآن</a><a class="btn ol" href="#menu">اكتشف المنيو</a></div></div><div class="hv" id="hv">مكان صورة البرجر الحقيقية</div></section>
+<section class="hero" aria-label="واجهة المطعم"><div class="hv" id="hv" aria-hidden="true"></div><div class="hero-copy"><div class="eb">برجر فاخر</div><h1>طازج <span style="color:#f23d16">&amp; شهي</span></h1><p>استمتع بالطعم الحقيقي للبرجر، بمكونات طازجة ونكهة غنية، محضّر بعناية ليصلك بأفضل مذاق.</p><a class="btn ol" href="#offers">اكتشف عروضنا</a></div></section>
 <section id="best" hidden><h2>الأكثر مبيعًا</h2><div class="grid" id="bg"></div></section>
 <section id="menu"><h2>المنيو</h2><div class="tabs" id="tabs"></div><div class="grid" id="mg"></div></section>
 <section id="offers" hidden><h2>العروض والوجبات المميزة</h2><div id="og"></div></section>
@@ -58,13 +104,13 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 <script>
 let D,cart=[],cat=0;
 const $=s=>document.querySelector(s),E=n=>(+n).toLocaleString('ar-EG'),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const img=u=>u?`<img src="${esc(u)}" alt="" loading="lazy">`:'صورة الصنف';
+const img=u=>u?`<img src="${esc(u)}" alt="" loading="lazy" onerror="this.replaceWith(document.createTextNode('صورة الصنف'))">`:'صورة الصنف';
 const card=p=>`<article class="card"><div class="im">${p.badge?`<b class="bd">${esc(p.badge)}</b>`:''}${img(p.image)}</div><div class="cb"><h3>${esc(p.name)}</h3><p>${esc(p.description)}</p><div class="rw"><div class="pr">${p.old_price?`<s>${E(p.old_price)}</s> `:''}${E(p.price)} ج.م</div>${p.available?`<button class="btn sm" data-p="${p.id}">أضف للسلة</button>`:'<span class="na">غير متاح</span>'}</div></div></article>`;
 async function init(){
  D=await (await fetch('/api/public')).json();const s=D.settings;document.title=s.name;
  $('#logo').innerHTML=s.logo?`<img src="${esc(s.logo)}" alt="${esc(s.name)}">`:esc(s.name);
- $('#he').textContent=s.hero_eyebrow;$('#ht').textContent=s.hero_title;$('#hp').textContent=s.hero_text;
- if(s.hero_image)$('#hv').innerHTML=img(s.hero_image);
+ /* Hero artwork is managed in the repository for this preview. */
+ $('#hv').innerHTML='<img src="/E54AA528-463D-49B3-BADE-299A51D83CFD.png" alt="برجر" loading="eager" fetchpriority="high">';
  $('#fh').textContent='مواعيد العمل: '+s.hours;$('#fp').textContent='الهاتف: '+s.phone;$('#fa').textContent='العنوان: '+s.address;
  $('#fs').innerHTML=s.social.split('\n').map(l=>l.split('|')).filter(x=>/^https?:/.test(x[1]||'')).map(x=>`<a href="${esc(x[1].trim())}" target="_blank" rel="noopener">${esc(x[0])}</a>`).join('');
  const f=D.products.filter(p=>p.featured);$('#best').hidden=!f.length;$('#bg').innerHTML=f.map(card).join('');
@@ -75,7 +121,7 @@ async function init(){
  draw();
 }
 function tot(){return cart.reduce((a,i)=>a+i.unit*i.qty,0)}
-function draw(){const n=cart.reduce((a,i)=>a+i.qty,0);$('#cb').textContent=E(n);$('#bar').classList.toggle('on',n>0);$('#bs').textContent=E(n)+' أصناف · '+E(tot())+' ج.م'}
+function draw(){const n=cart.reduce((a,i)=>a+i.qty,0);$('#cb').innerHTML=`<span>${E(n)}</span>`;$('#bar').classList.toggle('on',n>0);$('#bs').textContent=E(n)+' أصناف · '+E(tot())+' ج.م'}
 function add(it){const k=cart.find(c=>c.t==it.t&&c.id==it.id&&c.ad.join()==it.ad.join());k?k.qty+=it.qty:cart.push(it);draw()}
 function openP(id){
  const p=D.products.find(x=>x.id==id),ad=JSON.parse(p.addons||'[]');let q=1;

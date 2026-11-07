@@ -139,20 +139,40 @@ function nav(){
 }
 
 function login(){
- $('#m').innerHTML='<h1>تسجيل الدخول</h1><div style="max-width:360px"><label>كلمة المرور</label><input id="pw" type="password" autocomplete="current-password"><button class="btn" id="li">دخول</button></div>';
  $('#nv').innerHTML='';
-
- const go=async()=>{
-  const r=await fetch('/api/login',{
-   method:'POST',
-   headers:{'content-type':'application/json'},
-   body:JSON.stringify({password:$('#pw').value})
-  });
-  r.ok?show('home'):alert('كلمة المرور غير صحيحة');
+ $('#m').innerHTML='<h1>تسجيل الدخول</h1><form id="loginForm" autocomplete="on" style="max-width:360px"><label for="pw">كلمة المرور</label><input id="pw" name="password" type="password" autocomplete="current-password" autocapitalize="none" autocorrect="off" spellcheck="false" enterkeyhint="go" style="display:block;width:100%;min-height:52px;direction:ltr;text-align:left;position:relative;z-index:2;pointer-events:auto;touch-action:manipulation;-webkit-user-select:text;user-select:text"><button type="button" class="pl" id="togglePw">إظهار كلمة المرور</button><button class="btn" id="li" type="submit">دخول</button></form>';
+ const p=$('#pw'),f=$('#loginForm');
+ $('#togglePw').onclick=()=>{
+  const reveal=p.type==='password';
+  p.type=reveal?'text':'password';
+  $('#togglePw').textContent=reveal?'إخفاء كلمة المرور':'إظهار كلمة المرور';
+  p.focus();
  };
-
- $('#li').onclick=go;
- $('#pw').onkeydown=e=>e.key==='Enter'&&go();
+ f.onsubmit=async e=>{
+  e.preventDefault();
+  const button=$('#li');
+  button.disabled=true;
+  button.textContent='جارٍ التحقق...';
+  try{
+   const r=await fetch('/api/login',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({password:p.value})});
+   const data=await r.json().catch(()=>({}));
+   if(!r.ok){
+    alert((data.error||'تعذر تسجيل الدخول')+(data.code?' ['+data.code+']':'')+' ('+r.status+')');
+    return;
+   }
+   const check=await fetch('/api/admin/me',{cache:'no-store'});
+   if(!check.ok){
+    alert('تم قبول كلمة المرور لكن تعذر تأكيد الجلسة. حدّث الصفحة وافحص إعدادات SESSION_SECRET.');
+    return;
+   }
+   await show('home');
+  }catch(err){
+   alert('تعذر الاتصال بالخادم. تحقق من اتصال الإنترنت وحالة نشر Preview.');
+  }finally{
+   button.disabled=false;
+   button.textContent='دخول';
+  }
+ };
 }
 
 async function show(t){
@@ -288,8 +308,9 @@ function fld(f,v){
  else if(ty==='img')
   h=`<div data-im="${k}">
   ${v?`<img class="pv" src="${esc(v)}" alt="معاينة الصورة" onerror="this.style.display='none'">`:''}
-  <input type="text" ${n} value="${esc(v)}" placeholder="/images/burger1.webp">
-  <p class="img-help">اكتب مسار الصورة داخل الموقع أو رابط صورة يبدأ بـ https://</p>
+  <input type="text" ${n} value="${esc(v)}" placeholder="رابط الصورة بعد الرفع" readonly>
+  <input type="file" accept="image/jpeg,image/png,image/webp" data-upload="${k}">
+  <p class="img-help">اختر صورة من الآيفون (حتى 4 ميجابايت). تُرفع إلى GitHub.</p>
   <button type="button" class="pl" data-preview="${k}">معاينة الصورة</button>
   </div>`;
 
@@ -401,6 +422,23 @@ document.addEventListener('click',async e=>{
 });
 
 document.addEventListener('change',async e=>{
+ const fileInput=e.target;
+ if(fileInput.dataset.upload){
+  const file=fileInput.files&&fileInput.files[0];if(!file)return;
+  const box=fileInput.closest('[data-im]'),urlField=box.querySelector('input[type=text]');
+  fileInput.disabled=true;
+  try{
+   const r=await fetch('/api/admin/upload',{method:'POST',headers:{'content-type':file.type},body:file});
+   const data=await r.json();if(!r.ok)throw new Error(data.error||'فشل رفع الصورة');
+   urlField.value=data.url;
+   let img=box.querySelector('img');if(!img){img=document.createElement('img');img.className='pv';box.prepend(img)}
+   img.style.display='block';img.src=data.url;
+   alert('تم رفع الصورة إلى GitHub. اضغط حفظ لحفظها في المنتج.');
+  }catch(err){alert(err.message||'تعذر رفع الصورة')}
+  finally{fileInput.disabled=false;fileInput.value=''}
+  return;
+ }
+
  const k=e.target.dataset;
 
  if(k.pr){

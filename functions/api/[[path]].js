@@ -6,6 +6,8 @@ const J = (d, s = 200, h = {}) =>
     status: s,
     headers: {
       'content-type': 'application/json; charset=utf-8',
+      'cache-control': 'no-store, no-cache, must-revalidate',
+      'pragma': 'no-cache',
       ...h
     }
   });
@@ -57,6 +59,7 @@ const val = v =>
         : v;
 
 async function isAdmin(req, env) {
+  if (typeof env.SESSION_SECRET !== 'string' || env.SESSION_SECRET.trim().length < 32) return false;
   const m = (req.headers.get('cookie') || '').match(/(?:^|; )s=(\d+)\.([0-9a-f]+)/);
   return !!m &&
     !!env.SESSION_SECRET &&
@@ -171,15 +174,35 @@ export async function onRequest({ request: req, env, params }) {
       return J({ code, total: sub + del });
     }
 
+    if (p[0] === 'auth-status' && m === 'GET') {
+      return J({
+        adminPasswordConfigured: typeof env.ADMIN_PASSWORD === 'string' && env.ADMIN_PASSWORD.trim().length > 0,
+        sessionSecretConfigured: typeof env.SESSION_SECRET === 'string' && env.SESSION_SECRET.trim().length >= 32,
+        dbConfigured: !!env.DB,
+        host: new URL(req.url).host
+      });
+    }
+
     if (p[0] === 'login' && m === 'POST') {
       const b = await req.json();
 
-      if (
-        !env.ADMIN_PASSWORD ||
-        !env.SESSION_SECRET ||
-        !eq(await sha(String(b.password || '')), await sha(env.ADMIN_PASSWORD))
-      ) {
-        return J({ error: 'كلمة المرور غير صحيحة' }, 401);
+      const missingAuthSecrets = [
+        (typeof env.ADMIN_PASSWORD !== 'string' || !env.ADMIN_PASSWORD.trim()) ? 'ADMIN_PASSWORD' : null,
+        (typeof env.SESSION_SECRET !== 'string' || !env.SESSION_SECRET.trim()) ? 'SESSION_SECRET' : null,
+        (typeof env.SESSION_SECRET === 'string' && env.SESSION_SECRET.trim().length > 0 && env.SESSION_SECRET.trim().length < 32) ? 'SESSION_SECRET_WEAK' : null
+      ].filter(Boolean);
+      if (missingAuthSecrets.length) {
+        return J({
+          error: 'إعدادات تسجيل الدخول غير مكتملة في بيئة Preview. المتغير غير الموجود: ' + missingAuthSecrets.join(' و ')
+        }, 503);
+      }
+
+      const suppliedPassword = String(b.password ?? '').trim();
+      const configuredPassword = String(env.ADMIN_PASSWORD).trim();
+      if (!suppliedPassword) return J({ error: 'أدخل كلمة المرور', code: 'BAD_REQUEST' }, 400);
+
+      if (!eq(await sha(suppliedPassword), await sha(configuredPassword))) {
+        return J({ error: 'كلمة المرور غير صحيحة. تأكد من إدخالها كما حُفظت في Secret الخاص ببيئة Preview.' }, 401);
       }
 
       const exp = Date.now() + 7 * 864e5;
@@ -190,6 +213,7 @@ export async function onRequest({ request: req, env, params }) {
     }
 
     if (p[0] === 'logout') {
+      if (m !== 'POST') return J({ error: 'Method Not Allowed', code: 'METHOD_NOT_ALLOWED' }, 405, { allow: 'POST' });
       return J({ ok: 1 }, 200, {
         'set-cookie': 's=; Max-Age=0; Path=/; HttpOnly; Secure'
       });
@@ -199,6 +223,31 @@ export async function onRequest({ request: req, env, params }) {
 
     if (!await isAdmin(req, env)) {
       return J({ error: 'غير مصرح' }, 401);
+    }
+
+    if (p[1] === 'upload' && m === 'POST') {
+      if (!env.GITHUB_TOKEN) return J({ error: 'يلزم إعداد GITHUB_TOKEN في Cloudflare Pages Preview Secrets' }, 503);
+      const type = req.headers.get('content-type') || '';
+      const ext = ({ 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp' })[type];
+      if (!ext) return J({ error: 'ارفع JPG أو PNG أو WebP فقط' }, 415);
+      const buf = await req.arrayBuffer();
+      if (!buf.byteLength || buf.byteLength > 4 * 1024 * 1024) return J({ error: 'الحد الأقصى 4 ميجابايت' }, 413);
+      const bytes = new Uint8Array(buf);
+      const png = bytes.length >= 8 && [137,80,78,71,13,10,26,10].every((v,i)=>bytes[i]===v);
+      const jpg = bytes.length >= 3 && bytes[0]===255 && bytes[1]===216 && bytes[2]===255;
+      const webp = bytes.length >= 12 && String.fromCharCode(...bytes.slice(0,4))==='RIFF' && String.fromCharCode(...bytes.slice(8,12))==='WEBP';
+      if (!(type==='image/png'&&png || type==='image/jpeg'&&jpg || type==='image/webp'&&webp)) return J({ error: 'نوع الملف لا يطابق محتوى الصورة' }, 415);
+      let binary = '';
+      for (let i=0; i<bytes.length; i+=32768) binary += String.fromCharCode(...bytes.subarray(i, Math.min(i+32768, bytes.length)));
+      const path = 'public/images/' + crypto.randomUUID() + '.' + ext;
+      const gh = await fetch('https://api.github.com/repos/abdelrhmanebrheem1-pixel/burger-site/contents/' + path, {
+        method: 'PUT',
+        headers: { 'Authorization': 'Bearer ' + env.GITHUB_TOKEN, 'Accept': 'application/vnd.github+json', 'Content-Type': 'application/json', 'X-GitHub-Api-Version': '2022-11-28' },
+        body: JSON.stringify({ message: 'Upload restaurant image', content: btoa(binary), branch: 'preview-release' })
+      });
+      if (!gh.ok) return J({ error: gh.status===401||gh.status===403 ? 'صلاحية GitHub غير كافية؛ يلزم Contents Read and write' : 'تعذر حفظ الصورة في GitHub (' + gh.status + ')' }, 502);
+      const saved = await gh.json();
+      return J({ url: saved.content?.download_url || 'https://raw.githubusercontent.com/abdelrhmanebrheem1-pixel/burger-site/preview-release/' + path, path });
     }
 
     const id = p[2];

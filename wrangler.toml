@@ -7,3 +7,7 @@ binding = "DB"
 database_name = "burger-db"
 database_id = "076b90f0-3c19-46b1-89c8-32c3d4a79040"
 
+[[env.preview.d1_databases]]
+binding = "DB"
+database_name = "burger-preview-db"
+database_id = "03f9a7ed-3eb4-442e-859b-b6f760ed5257"
