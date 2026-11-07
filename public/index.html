@@ -208,10 +208,33 @@ header{height:78px;background:rgba(8,8,8,.92);border-bottom:1px solid #ffffff18;
   #logo .brand-location{font-size:15px!important}
 }
 
+
+/* Hero brand name includes Al Olya after number 5 */
+.hero h1.hero-brand{
+  direction:rtl!important;
+  unicode-bidi:plaintext!important;
+  text-align:center!important;
+  font-family:'Tajawal','Cairo',Tahoma,Arial,sans-serif!important;
+  font-size:clamp(43px,7vw,76px)!important;
+  font-weight:900!important;
+  line-height:1.45!important;
+  letter-spacing:0!important;
+  text-transform:none!important;
+  margin:18px auto 22px!important;
+  max-width:100%!important;
+  white-space:normal!important;
+}
+.hero-brand-name{color:#fff!important}
+.hero-brand-five{color:#e43a2c!important}
+.hero-brand-location{color:#f2bd4b!important}
+@media(max-width:800px){
+  .hero h1.hero-brand{font-size:clamp(37px,10vw,56px)!important;line-height:1.65!important;margin:14px auto 18px!important}
+}
+
 </style></head><body>
 <header><a id="logo" href="#" aria-label="Marjan 5 Burger Al Olya"><span class="brand-main"><span class="brand-marjan">برجر مرجان</span> <b>5</b></span><small class="brand-location">العليا</small></a><nav><a href="#">الرئيسية</a><a href="#menu">المنيو</a><a href="#offers">العروض</a><a href="#about">من نحن</a><a href="#about">تواصل معنا</a></nav>
 <div class="hd"><a class="ic" href="#menu" style="display:grid;place-items:center" aria-label="بحث">⌕</a><button class="ic or" id="cb" aria-label="السلة">٠</button></div></header>
-<section class="hero" aria-label="واجهة المطعم"><div class="hv" id="hv" aria-hidden="true"></div><div class="hero-copy"><div class="eb">برجر سماش بطابع أوروبي</div><h1>MARJAN <span style="color:#e33b27">5</span><br>BURGER</h1><p>استمتع بتجربة سماش برجر حقيقية، بلحم طازج محمّر بحواف مقرمشة، وجبنة ذائبة ومذاق لا يُنسى.</p><a class="btn ol" href="#menu">استكشف قائمة الطعام</a></div></section>
+<section class="hero" aria-label="واجهة المطعم"><div class="hv" id="hv" aria-hidden="true"></div><div class="hero-copy"><div class="eb">برجر سماش بطابع أوروبي</div><h1 class="hero-brand" dir="rtl"><span class="hero-brand-name">برجر مرجان</span> <span class="hero-brand-five">5</span> <span class="hero-brand-location">العليا</span></h1><p>استمتع بتجربة سماش برجر حقيقية، بلحم طازج محمّر بحواف مقرمشة، وجبنة ذائبة ومذاق لا يُنسى.</p><a class="btn ol" href="#menu">استكشف قائمة الطعام</a></div></section>
 <section id="best" hidden><h2>الأكثر مبيعًا</h2><div class="grid" id="bg"></div></section>
 <section id="menu"><h2>المنيو</h2><div class="tabs" id="tabs"></div><div class="grid" id="mg"></div></section>
 <section id="offers" hidden><h2>العروض والوجبات المميزة</h2><div id="og"></div></section>
