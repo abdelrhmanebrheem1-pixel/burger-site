@@ -106,7 +106,28 @@ header{height:78px;background:rgba(8,8,8,.92);border-bottom:1px solid #ffffff18;
 .tab.on,.bd,.btn{background:#9f202b;border-color:#9f202b}
 .pr{color:#e9ad26}
 @media(max-width:800px){#logo .brand-main{font-size:17px}#logo small{font-size:8px;letter-spacing:2.5px}.hero-copy{direction:ltr!important;text-align:left!important}}
-\n</style></head><body>
+\n
+/* Arabic hero description: clear, connected, and readable */
+.hero-copy p{
+  direction:rtl!important;
+  text-align:right!important;
+  font-family:'Cairo',Tahoma,sans-serif!important;
+  font-size:clamp(16px,1.45vw,20px)!important;
+  font-weight:600!important;
+  line-height:2.05!important;
+  letter-spacing:0!important;
+  word-spacing:normal!important;
+  max-width:590px!important;
+  margin:18px 0 22px!important;
+  color:#f5eee4!important;
+  text-shadow:0 2px 12px rgba(0,0,0,.85)!important;
+  white-space:normal!important;
+  overflow-wrap:normal!important;
+}
+@media(max-width:800px){
+ .hero-copy p{font-size:16px!important;line-height:2!important;max-width:100%!important;margin:14px 0 20px!important}
+}
+</style></head><body>
 <header><a id="logo" href="#" aria-label="Marjan 5 Burger Al Olya"><span class="brand-main"><span class="brand-marjan">MARJAN</span> <b>5</b> <em>BURGER</em></span><small>AL OLYA · SMASH BURGER</small></a><nav><a href="#">الرئيسية</a><a href="#menu">المنيو</a><a href="#offers">العروض</a><a href="#about">من نحن</a><a href="#about">تواصل معنا</a></nav>
 <div class="hd"><a class="ic" href="#menu" style="display:grid;place-items:center" aria-label="بحث">⌕</a><button class="ic or" id="cb" aria-label="السلة">٠</button></div></header>
 <section class="hero" aria-label="واجهة المطعم"><div class="hv" id="hv" aria-hidden="true"></div><div class="hero-copy"><div class="eb">برجر سماش بطابع أوروبي</div><h1>MARJAN <span style="color:#e33b27">5</span><br>BURGER</h1><p>استمتع بتجربة سماش برجر حقيقية، بلحم طازج محمّر بحواف مقرمشة، وجبنة ذائبة ومذاق لا يُنسى.</p><a class="btn ol" href="#menu">استكشف قائمة الطعام</a></div></section>
