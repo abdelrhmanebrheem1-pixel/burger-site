@@ -308,6 +308,16 @@ export async function onRequest({ request: req, env, params }) {
     if (cols) {
       const t = p[1];
       const b = ['POST', 'PUT'].includes(m) ? await req.json() : {};
+      if (t === 'products' && m === 'POST' &&
+          (b.price === null || b.price === undefined || b.price === '' ||
+           !Number.isFinite(Number(b.price)) || Number(b.price) < 0)) {
+        return J({ error: 'يرجى إدخال سعر صحيح للمنتج قبل الحفظ' }, 400);
+      }
+      if (t === 'products' && m === 'PUT' && 'price' in b &&
+          (b.price === null || b.price === '' ||
+           !Number.isFinite(Number(b.price)) || Number(b.price) < 0)) {
+        return J({ error: 'يرجى إدخال سعر صحيح للمنتج قبل الحفظ' }, 400);
+      }
       const f = cols.filter(c => c in b);
 
       if (m === 'GET') {
