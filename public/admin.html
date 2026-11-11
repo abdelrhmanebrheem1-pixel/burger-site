@@ -51,7 +51,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 
 <script>
 const $=s=>document.querySelector(s);
-const E=n=>(+n||0).toLocaleString('ar-EG');
+const E=n=>(+n||0).toLocaleString('ar-SA');
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
 const api=async(u,m='GET',b)=>{
@@ -89,7 +89,7 @@ const F={
   ['category_id','القسم','cat'],
   ['description','الوصف','ta'],
   ['ingredients','المكونات','ta'],
-  ['price','السعر (ج.م)','num'],
+  ['price','السعر (ر.س)','num'],
   ['old_price','السعر قبل الخصم','num'],
   ['image','مسار الصورة','img'],
   ['addons','الإضافات (سطر لكل إضافة: الاسم=السعر)','addons'],
@@ -187,7 +187,7 @@ async function show(t){
     ['إجمالي الطلبات',s.total],
     ['الطلبات الجديدة',s.n],
     ['الطلبات المكتملة',s.d],
-    ['إجمالي المبيعات (المكتملة)',E(s.sales)+' ج.م'],
+    ['إجمالي المبيعات (المكتملة)',E(s.sales)+' ر.س'],
     ['عدد المنتجات',s.products]
    ].map(x=>`<div class="st"><small>${x[0]}</small><b>${typeof x[1]==='number'?E(x[1]):x[1]}</b></div>`).join('')
   }</div>`;
@@ -236,16 +236,16 @@ function ordersUI(){
  <div class="two">
  <div>${
   o.map(x=>`<div class="rw ${x.id==oid?'on2':''}" data-oid="${x.id}" style="cursor:pointer">
-  <div class="t"><b>${x.code}</b><br>${esc(x.name)}<br><small>${x.created_at} · ${E(x.total)} ج.م</small></div>
+  <div class="t"><b>${x.code}</b><br>${esc(x.name)}<br><small>${x.created_at} · ${E(x.total)} ر.س</small></div>
   <span>${ST[x.status]}</span></div>`).join('')||'<p>لا توجد طلبات.</p>'
  }</div>
  <div>${sel?`<div class="st">
  <h2>${sel.code}</h2>
  <p>${esc(sel.name)} · <span style="color:var(--or)">${esc(sel.phone)}</span><br>توصيل إلى: ${esc(sel.address)}</p>
  ${sel.notes?`<p>ملاحظات: ${esc(sel.notes)}</p>`:''}
- ${JSON.parse(sel.items).map(i=>`<div class="rw"><div class="t">${esc(i.name)} × ${E(i.qty)}<br><small>${esc((i.addons||[]).join('، '))}</small></div>${E(i.price*i.qty)} ج.م</div>`).join('')}
- <p>رسوم التوصيل: ${E(sel.delivery)} ج.م</p>
- <h3 style="color:var(--or)">الإجمالي: ${E(sel.total)} ج.م</h3>
+ ${JSON.parse(sel.items).map(i=>`<div class="rw"><div class="t">${esc(i.name)} × ${E(i.qty)}<br><small>${esc((i.addons||[]).join('، '))}</small></div>${E(i.price*i.qty)} ر.س</div>`).join('')}
+ <p>رسوم التوصيل: ${E(sel.delivery)} ر.س</p>
+ <h3 style="color:var(--or)">الإجمالي: ${E(sel.total)} ر.س</h3>
  <label>حالة الطلب</label>
  <select id="os">${Object.keys(ST).map(k=>`<option value="${k}" ${k===sel.status?'selected':''}>${ST[k]}</option>`).join('')}</select>
  </div>`:''}</div></div>`;
