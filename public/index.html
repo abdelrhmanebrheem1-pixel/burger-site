@@ -264,9 +264,9 @@ header{height:78px;background:rgba(8,8,8,.92);border-bottom:1px solid #ffffff18;
 <dialog id="pd"><div class="dl" id="pdc"></div></dialog><dialog id="cd"><div class="dl" id="cdc"></div></dialog>
 <script>
 let D,cart=[],cat=0;
-const $=s=>document.querySelector(s),E=n=>(+n).toLocaleString('ar-EG'),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const $=s=>document.querySelector(s),E=n=>(+n).toLocaleString('ar-SA'),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const img=u=>u?`<img src="${esc(u)}" alt="" loading="lazy" onerror="this.replaceWith(document.createTextNode('صورة الصنف'))">`:'صورة الصنف';
-const card=p=>`<article class="card"><div class="im">${p.badge?`<b class="bd">${esc(p.badge)}</b>`:''}${img(p.image)}</div><div class="cb"><h3>${esc(p.name)}</h3><p>${esc(p.description)}</p><div class="rw"><div class="pr">${p.old_price?`<s>${E(p.old_price)}</s> `:''}${E(p.price)} ج.م</div>${p.available?`<button class="btn sm" data-p="${p.id}">أضف للسلة</button>`:'<span class="na">غير متاح</span>'}</div></div></article>`;
+const card=p=>`<article class="card"><div class="im">${p.badge?`<b class="bd">${esc(p.badge)}</b>`:''}${img(p.image)}</div><div class="cb"><h3>${esc(p.name)}</h3><p>${esc(p.description)}</p><div class="rw"><div class="pr">${p.old_price?`<s>${E(p.old_price)}</s> `:''}${E(p.price)} ر.س</div>${p.available?`<button class="btn sm" data-p="${p.id}">أضف للسلة</button>`:'<span class="na">غير متاح</span>'}</div></div></article>`;
 async function init(){
  D=await (await fetch('/api/public')).json();const s=D.settings;document.title="MARJAN 5 BURGER | AL OLYA";
  $('#logo').innerHTML='<span class="brand-main"><span class="brand-marjan">برجر مرجان</span> <b>5</b></span><small class="brand-location">العليا</small>'; 
@@ -278,23 +278,23 @@ async function init(){
  $('#tabs').innerHTML=[{id:0,name:'الكل'},...D.categories].map(c=>`<button class="tab${c.id==cat?' on':''}" data-c="${c.id}">${esc(c.name)}</button>`).join('');
  $('#mg').innerHTML=D.products.filter(p=>!cat||p.category_id==cat).map(card).join('')||'<p>لا توجد أصناف في هذا القسم.</p>';
  $('#offers').hidden=!D.offers.length;
- $('#og').innerHTML=D.offers.map(o=>`<div class="offer"><div><small>العروض والوجبات المميزة</small><h3>${esc(o.title)}</h3><small>${esc(o.description)}</small><div class="pr">${o.old_price?`<s>${E(o.old_price)}</s> `:''}${E(o.price)} ج.م</div></div><button class="btn" data-o="${o.id}">اطلب العرض</button></div>`).join('');
+ $('#og').innerHTML=D.offers.map(o=>`<div class="offer"><div><small>العروض والوجبات المميزة</small><h3>${esc(o.title)}</h3><small>${esc(o.description)}</small><div class="pr">${o.old_price?`<s>${E(o.old_price)}</s> `:''}${E(o.price)} ر.س</div></div><button class="btn" data-o="${o.id}">اطلب العرض</button></div>`).join('');
  draw();
 }
 function tot(){return cart.reduce((a,i)=>a+i.unit*i.qty,0)}
-function draw(){const n=cart.reduce((a,i)=>a+i.qty,0);$('#cb').innerHTML=`<span>${E(n)}</span>`;$('#bar').classList.toggle('on',n>0);$('#bs').textContent=E(n)+' أصناف · '+E(tot())+' ج.م'}
+function draw(){const n=cart.reduce((a,i)=>a+i.qty,0);$('#cb').innerHTML=`<span>${E(n)}</span>`;$('#bar').classList.toggle('on',n>0);$('#bs').textContent=E(n)+' أصناف · '+E(tot())+' ر.س'}
 function add(it){const k=cart.find(c=>c.t==it.t&&c.id==it.id&&c.ad.join()==it.ad.join());k?k.qty+=it.qty:cart.push(it);draw()}
 function openP(id){
  const p=D.products.find(x=>x.id==id),ad=JSON.parse(p.addons||'[]');let q=1;
- $('#pdc').innerHTML=`<div class="im">${img(p.image)}</div><h3>${esc(p.name)}</h3><p>${esc(p.description)}</p>${p.ingredients?`<p>المكونات: ${esc(p.ingredients)}</p>`:''}${ad.map((a,i)=>`<label class="ck"><input type="checkbox" value="${i}" style="width:auto"> ${esc(a.name)} <em>+${E(a.price)} ج.م</em></label>`).join('')}<div class="rw" style="margin-top:16px"><div class="qt"><button data-q="-1">−</button><b id="pq">1</b><button data-q="1">+</button></div><button class="btn" id="pa">أضف للسلة</button></div>`;
+ $('#pdc').innerHTML=`<div class="im">${img(p.image)}</div><h3>${esc(p.name)}</h3><p>${esc(p.description)}</p>${p.ingredients?`<p>المكونات: ${esc(p.ingredients)}</p>`:''}${ad.map((a,i)=>`<label class="ck"><input type="checkbox" value="${i}" style="width:auto"> ${esc(a.name)} <em>+${E(a.price)} ر.س</em></label>`).join('')}<div class="rw" style="margin-top:16px"><div class="qt"><button data-q="-1">−</button><b id="pq">1</b><button data-q="1">+</button></div><button class="btn" id="pa">أضف للسلة</button></div>`;
  $('#pdc').onclick=e=>{const d=e.target.dataset.q;if(d){q=Math.max(1,q+ +d);$('#pq').textContent=E(q)}};
  $('#pa').onclick=()=>{const sel=[...$('#pdc').querySelectorAll('input:checked')].map(i=>ad[i.value]);add({t:'p',id:p.id,name:p.name,unit:p.price+sel.reduce((a,x)=>a+x.price,0),qty:q,ad:sel.map(x=>x.name)});$('#pd').close()};
  $('#pd').showModal();
 }
 function cartUI(msg){
  const s=D.settings,fee=+s.delivery_fee||0;
- $('#cdc').innerHTML=msg||(cart.length?`${cart.map((c,i)=>`<div class="ci"><div>${esc(c.name)}<br><small>${esc(c.ad.join('، '))}</small></div><div class="qt"><button data-i="${i}" data-d="-1">−</button><b>${E(c.qty)}</b><button data-i="${i}" data-d="1">+</button></div><b>${E(c.unit*c.qty)} ج.م</b></div>`).join('')}
- <p>رسوم التوصيل: ${E(fee)} ج.م<br><b class="pr">الإجمالي: ${E(tot()+fee)} ج.م</b></p>
+ $('#cdc').innerHTML=msg||(cart.length?`${cart.map((c,i)=>`<div class="ci"><div>${esc(c.name)}<br><small>${esc(c.ad.join('، '))}</small></div><div class="qt"><button data-i="${i}" data-d="-1">−</button><b>${E(c.qty)}</b><button data-i="${i}" data-d="1">+</button></div><b>${E(c.unit*c.qty)} ر.س</b></div>`).join('')}
+ <p>رسوم التوصيل: ${E(fee)} ر.س<br><b class="pr">الإجمالي: ${E(tot()+fee)} ر.س</b></p>
  <input id="fn" placeholder="الاسم" autocomplete="name"><input id="fph" placeholder="رقم الهاتف" type="tel" autocomplete="tel"><input id="fad" placeholder="عنوان التوصيل" autocomplete="street-address"><textarea id="fno" placeholder="ملاحظات الطلب" rows="2"></textarea><div class="err" id="fe"></div><button class="btn" id="fgo" style="width:100%">تأكيد الطلب</button>`:'<p>السلة فارغة.</p>');
 }
 $('#cdc').onclick=async e=>{
@@ -304,7 +304,7 @@ $('#cdc').onclick=async e=>{
   const r=await fetch('/api/order',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)}),j=await r.json();
   if(!r.ok){$('#fe').textContent=j.error;return}
   cart=[];draw();const w=D.settings.whatsapp.replace(/\D/g,'');
-  cartUI(`<h3>تم استلام طلبك</h3><p>رقم الطلب: <b>${j.code}</b><br>الإجمالي: ${E(j.total)} ج.م</p>${w?`<a class="btn" target="_blank" rel="noopener" href="https://wa.me/${w}?text=${encodeURIComponent('طلب رقم '+j.code)}">تأكيد على واتساب</a>`:''}`);
+  cartUI(`<h3>تم استلام طلبك</h3><p>رقم الطلب: <b>${j.code}</b><br>الإجمالي: ${E(j.total)} ر.س</p>${w?`<a class="btn" target="_blank" rel="noopener" href="https://wa.me/${w}?text=${encodeURIComponent('طلب رقم '+j.code)}">تأكيد على واتساب</a>`:''}`);
  }
 };
 document.addEventListener('click',e=>{
