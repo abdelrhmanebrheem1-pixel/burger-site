@@ -293,11 +293,18 @@ function openP(id){
 }
 function cartUI(msg){
  const s=D.settings,fee=+s.delivery_fee||0;
- $('#cdc').innerHTML=msg||(cart.length?`${cart.map((c,i)=>`<div class="ci"><div>${esc(c.name)}<br><small>${esc(c.ad.join('، '))}</small></div><div class="qt"><button data-i="${i}" data-d="-1">−</button><b>${E(c.qty)}</b><button data-i="${i}" data-d="1">+</button></div><b>${E(c.unit*c.qty)} ر.س</b></div>`).join('')}
+  $('#cdc').innerHTML=msg||(cart.length?`<button type="button" class="btn sm" id="continueShopping" style="margin-bottom:16px">← متابعة التسوق والعودة للمنيو</button>${cart.map((c,i)=>`<div class="ci"><div><b>${esc(c.name)}</b><br><small>${esc(c.ad.join('، '))}</small><br><button type="button" data-remove="${i}" style="margin-top:6px;border:0;background:transparent;color:#c44;cursor:pointer;font:700 12px Cairo">حذف المنتج ✕</button></div><div class="qt"><button data-i="${i}" data-d="-1">−</button><b>${E(c.qty)}</b><button data-i="${i}" data-d="1">+</button></div><b>${E(c.unit*c.qty)} ر.س</b></div>`).join('')}
+  <p>رسوم التوصيل: ${E(fee)} ر.س<br><b class="pr">الإجمالي: ${E(tot()+fee)} ر.س</b></p>
+  <input id="fn" placeholder="الاسم" autocomplete="name"><input id="fph" placeholder="رقم الهاتف" type="tel" autocomplete="tel"><input id="fad" placeholder="عنوان التوصيل" autocomplete="street-address"><textarea id="fno" placeholder="ملاحظات الطلب" rows="2"></textarea><div class="err" id="fe"></div><button class="btn" id="fgo" style="width:100%">تأكيد الطلب</button>`:'<p>السلة فارغة.</p><button type="button" class="btn" id="continueShopping">العودة للمنيو ومتابعة التسوق</button>');
  <p>رسوم التوصيل: ${E(fee)} ر.س<br><b class="pr">الإجمالي: ${E(tot()+fee)} ر.س</b></p>
  <input id="fn" placeholder="الاسم" autocomplete="name"><input id="fph" placeholder="رقم الهاتف" type="tel" autocomplete="tel"><input id="fad" placeholder="عنوان التوصيل" autocomplete="street-address"><textarea id="fno" placeholder="ملاحظات الطلب" rows="2"></textarea><div class="err" id="fe"></div><button class="btn" id="fgo" style="width:100%">تأكيد الطلب</button>`:'<p>السلة فارغة.</p>');
 }
 $('#cdc').onclick=async e=>{
+  const d=e.target.dataset;
+  if(e.target.id==='continueShopping'){ $('#cd').close(); $('#menu').scrollIntoView({behavior:'smooth'}); return; }
+  if(d.remove!==undefined){cart.splice(+d.remove,1);draw();cartUI();return}
+  if(d.d){const c=cart[d.i];c.qty+=+d.d;if(c.qty<1)cart.splice(d.i,1);draw();cartUI()}
+  if(e.target.id==='fgo'){
  const d=e.target.dataset;if(d.d){const c=cart[d.i];c.qty+=+d.d;if(c.qty<1)cart.splice(d.i,1);draw();cartUI()}
  if(e.target.id==='fgo'){
   const body={name:$('#fn').value,phone:$('#fph').value,address:$('#fad').value,notes:$('#fno').value,items:cart.map(c=>({t:c.t,id:c.id,qty:c.qty,addons:c.ad}))};
