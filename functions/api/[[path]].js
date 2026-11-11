@@ -245,7 +245,7 @@ export async function onRequest({ request: req, env, params }) {
         headers: { 'Authorization': 'Bearer ' + env.GITHUB_TOKEN, 'Accept': 'application/vnd.github+json', 'Content-Type': 'application/json', 'X-GitHub-Api-Version': '2022-11-28' },
         body: JSON.stringify({ message: 'Upload restaurant image', content: btoa(binary), branch: 'preview-release' })
       });
-      if (!gh.ok) return J({ error: gh.status===401||gh.status===403 ? 'صلاحية GitHub غير كافية؛ يلزم Contents Read and write' : 'تعذر حفظ الصورة في GitHub (' + gh.status + ')' }, 502);
+      if (!gh.ok) { const ghError = await gh.json().catch(() => ({})); const detail = typeof ghError.message === 'string' ? ghError.message : 'Unknown GitHub API error'; return J({ error: 'GitHub API (' + gh.status + '): ' + detail }, 502); }
       const saved = await gh.json();
       return J({ url: saved.content?.download_url || 'https://raw.githubusercontent.com/abdelrhmanebrheem1-pixel/burger-site/preview-release/' + path, path });
     }
