@@ -242,7 +242,7 @@ export async function onRequest({ request: req, env, params }) {
       const path = 'public/images/' + crypto.randomUUID() + '.' + ext;
       const gh = await fetch('https://api.github.com/repos/abdelrhmanebrheem1-pixel/burger-site/contents/' + path, {
         method: 'PUT',
-        headers: { 'Authorization': 'Bearer ' + env.GITHUB_TOKEN, 'Accept': 'application/vnd.github+json', 'Content-Type': 'application/json', 'X-GitHub-Api-Version': '2022-11-28' },
+        headers: { 'Authorization': 'Bearer ' + env.GITHUB_TOKEN, 'Accept': 'application/vnd.github+json', 'Content-Type': 'application/json', 'X-GitHub-Api-Version': '2022-11-28', 'User-Agent': 'MARJAN5-BURGER-ADMIN' },
         body: JSON.stringify({ message: 'Upload restaurant image', content: btoa(binary), branch: 'preview-release' })
       });
       if (!gh.ok) { const body = await gh.text().catch(() => ''); const requestId = gh.headers.get('x-github-request-id') || ''; const detail = body ? body.slice(0, 500) : 'Empty response body'; return J({ error: 'GitHub API (' + gh.status + '): ' + detail + (requestId ? ' [Request ID: ' + requestId + ']' : '') }, 502); }
