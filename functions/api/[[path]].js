@@ -193,7 +193,7 @@ export async function onRequest({ request: req, env, params }) {
       ].filter(Boolean);
       if (missingAuthSecrets.length) {
         return J({
-          error: 'إعدادات تسجيل الدخول غير مكتملة في بيئة Preview. المتغير غير الموجود: ' + missingAuthSecrets.join(' و ')
+          error: 'إعدادات تسجيل الدخول غير مكتملة في بيئة النشر الحالية. راجع المتغير التالي: ' + missingAuthSecrets.join(' و ')
         }, 503);
       }
 
@@ -226,7 +226,7 @@ export async function onRequest({ request: req, env, params }) {
     }
 
     if (p[1] === 'upload' && m === 'POST') {
-      if (!env.GITHUB_TOKEN) return J({ error: 'يلزم إعداد GITHUB_TOKEN في Cloudflare Pages Preview Secrets' }, 503);
+      if (!env.GITHUB_TOKEN) return J({ error: 'يلزم إعداد GITHUB_TOKEN ضمن Secrets لبيئة النشر الحالية في Cloudflare Pages' }, 503);
       const type = req.headers.get('content-type') || '';
       const ext = ({ 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp' })[type];
       if (!ext) return J({ error: 'ارفع JPG أو PNG أو WebP فقط' }, 415);
