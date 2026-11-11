@@ -149,7 +149,7 @@ export async function onRequest({ request: req, env, params }) {
       if (!items.length) return J({ error: 'السلة فارغة' }, 400);
 
       if (sub < (+st.min_order || 0)) {
-        return J({ error: 'الحد الأدنى للطلب ' + st.min_order + ' ج.م' }, 400);
+        return J({ error: 'الحد الأدنى للطلب ' + st.min_order + ' ر.س' }, 400);
       }
 
       const del = +st.delivery_fee || 0;
