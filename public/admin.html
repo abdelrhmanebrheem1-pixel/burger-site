@@ -315,7 +315,7 @@ function fld(f,v){
   </div>`;
 
  else
-  h=`<input ${n} type="${ty==='num'?'number':ty==='date'?'date':'text'}" ${ty==='num'?'step="any"':''} value="${esc(v)}">`;
+  h=`<input ${n} type="${ty==='num'?'number':ty==='date'?'date':'text'}" ${ty==='num'?'step="any"':''} ${k==='price'?'required min="0"':''} value="${esc(v)}">`;
 
  return `<label>${l}</label>${h}`;
 }
