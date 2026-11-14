@@ -304,7 +304,7 @@ $('#cdc').onclick=async e=>{
  if(d.d){const c=cart[d.i];c.qty+=+d.d;if(c.qty<1)cart.splice(d.i,1);draw();cartUI()}
  if(e.target.id==='fgo'){
   const body={name:$('#fn').value,phone:$('#fph').value,address:$('#fad').value,notes:$('#fno').value,items:cart.map(c=>({t:c.t,id:c.id,qty:c.qty,addons:c.ad}))};
-  const orderLines=cart.map(c=>'- '+c.name+' × '+c.qty+(c.ad.length?' (إضافات: '+c.ad.join('، ')+')':'')+' — '+E(c.unit*c.qty)+' ر.س').join('\\n');
+  const orderLines=cart.map(c=>'- '+c.name+' × '+c.qty+(c.ad.length?' (إضافات: '+c.ad.join('، ')+')':'')+' — '+E(c.unit*c.qty)+' ر.س').join('\n');
   const r=await fetch('/api/order',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)}),j=await r.json();
   if(!r.ok){$('#fe').textContent=j.error;return}
   const waText=[
@@ -318,7 +318,7 @@ $('#cdc').onclick=async e=>{
    'الإجمالي شامل التوصيل: '+E(j.total)+' ر.س',
    'طريقة الدفع: الدفع عند الاستلام',
    body.notes?'ملاحظات: '+body.notes:''
-  ].filter(Boolean).join('\\n');
+  ].filter(Boolean).join('\n');
   const wa='https://wa.me/966559899362?text='+encodeURIComponent(waText);
   cart=[];draw();
   cartUI(`<h3>تم تسجيل طلبك بنجاح</h3><p>رقم الطلب: <b>${j.code}</b><br>الإجمالي: ${E(j.total)} ر.س<br><b style="color:#f2bd4b">الدفع عند الاستلام</b></p><a class="btn" target="_blank" rel="noopener" href="${wa}" style="width:100%;text-align:center">إرسال تفاصيل الطلب إلى واتساب</a><p style="color:#aaa;font-size:13px">اضغط الزر لإرسال تفاصيل الطلب للمطعم على واتساب.</p>`);
