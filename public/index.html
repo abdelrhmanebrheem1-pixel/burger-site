@@ -269,7 +269,7 @@ const img=u=>u?`<img src="${esc(u)}" alt="" loading="lazy" onerror="this.replace
 const card=p=>`<article class="card"><div class="im">${p.badge?`<b class="bd">${esc(p.badge)}</b>`:''}${img(p.image)}</div><div class="cb"><h3>${esc(p.name)}</h3><p>${esc(p.description)}</p><div class="rw"><div class="pr">${p.old_price?`<s>${E(p.old_price)}</s> `:''}${E(p.price)} ر.س</div>${p.available?`<button class="btn sm" data-p="${p.id}">أضف للسلة</button>`:'<span class="na">غير متاح</span>'}</div></div></article>`;
 async function init(){
  D=await (await fetch('/api/public')).json();const s=D.settings;document.title="MARJAN 5 BURGER | AL OLYA";
- $('#logo').innerHTML='<span class="brand-main"><span class="brand-marjan">برجر مرجان</span> <b>5</b></span><small class="brand-location">العليا</small>'; 
+ $('#logo').innerHTML='<span class="brand-main"><span class="brand-marjan">MARJAN</span> <b>5</b> <em>BURGER</em></span><small class="brand-location">AL OLYA</small>'; 
  /* Hero artwork is managed in the repository for this preview. */
  $('#hv').innerHTML='<img src="/E54AA528-463D-49B3-BADE-299A51D83CFD.png" alt="برجر" loading="eager" fetchpriority="high">';
  $('#fh').textContent='مواعيد العمل: '+s.hours;$('#fp').textContent='الهاتف: '+s.phone;$('#fa').textContent='العنوان: '+s.address;
