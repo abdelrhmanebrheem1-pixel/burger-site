@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>لوحة التحكم</title>
+<title>لوحة إدارة مطعم الجامعة</title>
 <meta name="robots" content="noindex">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
@@ -182,7 +182,7 @@ async function show(t){
 
  if(t==='home'){
   const s=await api('admin/stats');
-  m.innerHTML=`<h1>لوحة التحكم</h1><div class="g">${
+  m.innerHTML=`<h1>لوحة إدارة مطعم الجامعة</h1><div class="g">${
    [
     ['إجمالي الطلبات',s.total],
     ['الطلبات الجديدة',s.n],
