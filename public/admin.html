@@ -272,7 +272,7 @@ function listUI(){
   t==='offers'?(x.active?'مفعّل':'متوقف')+(x.ends_at?' · ينتهي '+x.ends_at:''):
   'ترتيب '+E(x.sort)
  }</small></div>
- ${t!=='categories'?`<small>السعر</small><input type="number" step="any" value="${x.price??''}" data-pr="${x.id}" aria-label="السعر">`:''}
+ ${t!=='categories'?`<small>السعر</small><input type="text" inputmode="decimal" autocomplete="off" value="${x.price??''}" data-pr="${x.id}" aria-label="السعر">`:''}
  ${t==='products'?`<button class="pl ${x.available?'ok':'no'}" data-av="${x.id}">${x.available?'متاح':'غير متاح'}</button><button class="pl" data-vs="${x.id}">${x.visible?'ظاهر':'مخفي'}</button>`:''}
  <button class="pl" data-ed="${x.id}">تعديل</button>
  <button class="pl no" data-del="${x.id}">حذف</button>
@@ -315,7 +315,7 @@ function fld(f,v){
   </div>`;
 
  else
-  h=`<input ${n} type="${ty==='num'?'number':ty==='date'?'date':'text'}" ${ty==='num'?'step="any"':''} ${k==='price'?'required min="0"':''} value="${esc(v)}">`;
+  h=`<input ${n} type="${ty==='date'?'date':'text'}" ${ty==='num'?'inputmode="decimal" autocomplete="off"':''} ${k==='price'?'required':''} value="${esc(v)}">`;
 
  return `<label>${l}</label>${h}`;
 }
@@ -327,7 +327,7 @@ function collect(f,fs){
   const e=f.elements[k];
 
   if(ty==='chk')o[k]=e.checked?1:0;
-  else if(ty==='num')o[k]=e.value===''?null:+e.value;
+  else if(ty==='num')o[k]=e.value===''?null:Number(e.value.replace(',','.'));
   else if(ty==='addons'){
    o[k]=e.value.split('\n').map(l=>l.split('=')).filter(a=>a[0].trim()).map(a=>({
     name:a[0].trim(),
